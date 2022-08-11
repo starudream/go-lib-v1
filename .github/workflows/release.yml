@@ -1,0 +1,28 @@
+name: Release
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  release:
+    name: Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Prepare
+        uses: google-github-actions/release-please-action@v3
+        id: prepare
+        with:
+          token: ${{ secrets.PAT }}
+          release-type: go
+          bump-minor-pre-major: true
+          bump-patch-for-minor-pre-major: true
+          pull-request-title-pattern: "release: ${version}"
+      - name: Release
+        if: ${{ steps.prepare.outputs.release_created }}
+        uses: softprops/action-gh-release@v1
+        with:
+          token: ${{ secrets.PAT }}
+          tag_name: ${{ steps.prepare.outputs.tag_name }}
+          generate_release_notes: true
