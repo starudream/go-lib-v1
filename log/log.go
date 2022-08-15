@@ -17,7 +17,7 @@ func init() {
 	zerolog.TimeFieldFormat = constant.LoggerTimeFormat
 
 	var (
-		level   zerolog.Level
+		level   = zerolog.InfoLevel
 		writers []io.Writer
 	)
 
