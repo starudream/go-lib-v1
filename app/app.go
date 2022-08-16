@@ -67,6 +67,7 @@ func internalGo(once bool) error {
 	if once {
 		go func() {
 			wg.Wait()
+			time.Sleep(10 * time.Millisecond)
 			close(doneCh)
 		}()
 	}
