@@ -8,6 +8,7 @@ require (
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/json-iterator/go v1.1.12
 	github.com/mattn/go-colorable v0.1.13
+	github.com/robfig/cron/v3 v3.0.1
 	github.com/rs/zerolog v1.27.0
 	github.com/spf13/cast v1.5.0
 	github.com/spf13/jwalterweatherman v1.1.0
