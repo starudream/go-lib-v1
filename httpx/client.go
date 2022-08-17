@@ -23,7 +23,7 @@ func init() {
 	_c.XMLUnmarshal = xml.Unmarshal
 
 	_c.SetTimeout(5 * time.Minute)
-	_c.SetLogger(&logger{Logger: log.Logger()})
+	_c.SetLogger(&logger{Logger: log.With().Str("span", "http").Logger()})
 	_c.SetDisableWarn(true)
 	_c.SetDebug(config.GetBool("debug"))
 
