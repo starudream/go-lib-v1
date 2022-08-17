@@ -6,11 +6,15 @@
 
 ## Install
 
-- Only `Go 1.18+`
+![GoVersion](https://img.shields.io/github/go-mod/go-version/starudream/go-lib?style=for-the-badge)
 
 ```shell
 go get -u github.com/starudream/go-lib
 ```
+
+## Usage
+
+[GoDoc](https://pkg.go.dev/github.com/starudream/go-lib)
 
 ## License
 
