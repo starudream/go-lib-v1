@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.2.0](https://github.com/starudream/go-lib/compare/v1.1.0...v1.2.0) (2022-08-17)
+
+
+### Features
+
+* **cronx:** add cron helper ([decc6f4](https://github.com/starudream/go-lib/commit/decc6f40b6adaabb5abda1f3bbf93f311dd55470))
+* **httpx:** add log span ([2484bb6](https://github.com/starudream/go-lib/commit/2484bb6a47a3358f07b049d426e30773bda6022d))
+
 ## [1.1.0](https://github.com/starudream/go-lib/compare/v1.0.0...v1.1.0) (2022-08-16)
 
 
