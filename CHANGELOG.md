@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.1](https://github.com/starudream/go-lib/compare/v1.2.0...v1.2.1) (2022-08-19)
+
+
+### Bug Fixes
+
+* fix cron ([1b1eb1a](https://github.com/starudream/go-lib/commit/1b1eb1a2c65d3313bbd78da4de6b58428bbf5686))
+
 ## [1.2.0](https://github.com/starudream/go-lib/compare/v1.1.0...v1.2.0) (2022-08-17)
 
 
