@@ -13,6 +13,11 @@ import (
 	"github.com/starudream/go-lib/log"
 )
 
+type (
+	Request  = resty.Request
+	Response = resty.Response
+)
+
 var _c *resty.Client
 
 func init() {
