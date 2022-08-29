@@ -28,6 +28,11 @@ version-example-simple:
 	CGO_ENABLED=1 $(GO) build -race -tags '$(BITTAGS)' -ldflags '$(LDFLAGS)' -o bin/example-simple $(MODULE)/example/simple
 	go version -m bin/example-simple
 
+.PHONY: example-bot
+example-bot:
+	@$(MAKE) tidy
+	CGO_ENABLED=1 $(GO) run -race -tags '$(BITTAGS)' -ldflags '$(LDFLAGS)' $(MODULE)/example/bot
+
 .PHONY: lint
 lint:
 	@$(MAKE) tidy
