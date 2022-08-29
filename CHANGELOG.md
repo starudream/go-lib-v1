@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://github.com/starudream/go-lib/compare/v1.2.1...v1.3.0) (2022-08-29)
+
+
+### Features
+
+* **bot:** add dingtalk ([0c39b52](https://github.com/starudream/go-lib/commit/0c39b52ae0d418f39bf90e13a7305b63a9ca5ef1))
+
 ## [1.2.1](https://github.com/starudream/go-lib/compare/v1.2.0...v1.2.1) (2022-08-19)
 
 
