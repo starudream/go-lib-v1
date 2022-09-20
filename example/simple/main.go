@@ -5,6 +5,7 @@ import (
 
 	"github.com/starudream/go-lib/app"
 	"github.com/starudream/go-lib/config"
+	"github.com/starudream/go-lib/errx"
 	"github.com/starudream/go-lib/httpx"
 	"github.com/starudream/go-lib/log"
 	"github.com/starudream/go-lib/randx"
@@ -14,6 +15,7 @@ func main() {
 	log.Attach("app", "example-simple")
 	app.Add(wrapError(TestAppTime))
 	app.Add(wrapError(TestConfig))
+	app.Add(wrapError(TestErrx))
 	// app.Add(wrapError(TestHTTPX))
 	app.Add(wrapError(TestRandX))
 	app.Defer(TestDefer)
@@ -35,6 +37,20 @@ func TestAppTime() {
 
 func TestConfig() {
 	log.Warn().Msgf("debug: %v", config.GetBool("debug"))
+}
+
+func TestErrx() {
+	e1 := errx.New("a1")
+	e2 := errx.New("b1")
+	e3 := errx.Wrap(e1, "a11")
+	log.Info().Msgf("%#v", e1)
+	log.Info().Msgf("%#v", e2)
+	log.Info().Msgf("%+v", e3)
+	e4 := errx.Cause(e3)
+	log.Info().Msgf("%#v", e4)
+	if !errx.Is(e1, e4) {
+		panic("e1 == e4")
+	}
 }
 
 func TestHTTPX() {
