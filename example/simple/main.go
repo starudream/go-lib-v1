@@ -71,7 +71,9 @@ func TestRandX() {
 }
 
 func TestSeq() {
-	log.Info().Msgf("seq: %s", seq.NextId())
+	log.Info().Msgf("sonyflake: %s", seq.NextId())
+	log.Info().Msgf("uuid: %s", seq.UUID())
+	log.Info().Msgf("uuid short: %s", seq.UUIDShort())
 }
 
 func TestDefer() {

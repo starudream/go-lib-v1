@@ -5,8 +5,11 @@ import (
 )
 
 func TestUUID(t *testing.T) {
-	s := UUID()
-	t.Log(s)
+	s1 := UUID()
+	t.Log(s1)
 
-	t.Log(ParseUUID(s))
+	s2 := UUIDShort()
+	t.Log(s2)
+
+	t.Log(ParseUUID(s1))
 }
