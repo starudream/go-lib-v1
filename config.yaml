@@ -1,1 +1,3 @@
 debug: true
+sonyflake:
+  machine_id: 5

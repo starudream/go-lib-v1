@@ -10,6 +10,7 @@ import (
 	"github.com/starudream/go-lib/httpx"
 	"github.com/starudream/go-lib/log"
 	"github.com/starudream/go-lib/randx"
+	"github.com/starudream/go-lib/seq"
 )
 
 func main() {
@@ -19,6 +20,7 @@ func main() {
 	app.Add(wrapError(TestErrx))
 	app.Add(wrapError(TestHTTPX))
 	app.Add(wrapError(TestRandX))
+	app.Add(wrapError(TestSeq))
 	app.Defer(TestDefer)
 	err := app.OnceGo()
 	if err != nil {
@@ -31,8 +33,8 @@ func wrapError(f func()) func(ctx context.Context) error {
 }
 
 func TestAppTime() {
-	log.Info().Msgf("startup: %v", app.StartupTime())
-	log.Info().Msgf("running: %v", app.RunningTime())
+	log.Info().Msgf("startup: %v", app.StartupTime().Format(time.RFC3339Nano))
+	log.Info().Msgf("running: %v", app.RunningTime().Format(time.RFC3339Nano))
 	log.Info().Msgf("cost: %v", app.CostTime())
 }
 
@@ -65,7 +67,11 @@ func TestHTTPX() {
 }
 
 func TestRandX() {
-	log.Info().Msgf("fake %s", randx.F().LetterN(16))
+	log.Info().Msgf("fake: %s", randx.F().LetterN(16))
+}
+
+func TestSeq() {
+	log.Info().Msgf("seq: %s", seq.NextId())
 }
 
 func TestDefer() {
