@@ -1,6 +1,7 @@
 package httpx
 
 import (
+	"net/http"
 	"time"
 
 	"github.com/go-resty/resty/v2"
@@ -36,6 +37,16 @@ func init() {
 	if pc != nil && (pc.HTTPProxy != "" || pc.HTTPSProxy != "") {
 		ilog.X.Debug().Msgf("proxy: %s", json.MustMarshalString(pc))
 	}
+}
+
+func SetTimeout(timeout time.Duration) {
+	_c.SetTimeout(timeout)
+}
+
+var hdrUserAgentKey = http.CanonicalHeaderKey("User-Agent")
+
+func SetUserAgent(ua string) {
+	_c.SetHeader(hdrUserAgentKey, ua)
 }
 
 func R() *resty.Request {

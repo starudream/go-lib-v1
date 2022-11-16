@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"time"
 
 	"github.com/starudream/go-lib/app"
 	"github.com/starudream/go-lib/config"
@@ -16,7 +17,7 @@ func main() {
 	app.Add(wrapError(TestAppTime))
 	app.Add(wrapError(TestConfig))
 	app.Add(wrapError(TestErrx))
-	// app.Add(wrapError(TestHTTPX))
+	app.Add(wrapError(TestHTTPX))
 	app.Add(wrapError(TestRandX))
 	app.Defer(TestDefer)
 	err := app.OnceGo()
@@ -54,7 +55,9 @@ func TestErrx() {
 }
 
 func TestHTTPX() {
-	resp, err := httpx.R().Get("https://api.github.com")
+	httpx.SetTimeout(3 * time.Second)
+	httpx.SetUserAgent("go")
+	resp, err := httpx.R().Get("https://www.gstatic.com/generate_204")
 	if err != nil {
 		panic(err)
 	}
