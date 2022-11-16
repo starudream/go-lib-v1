@@ -35,7 +35,10 @@ func init() {
 		ilog.X.Fatal().Msgf("sonyflake setting error")
 	}
 
-	id, _ := _sf.NextID()
+	id, err := _sf.NextID()
+	if err != nil {
+		panic(err)
+	}
 
 	startTime, machineId = _startTime, uint16(sonyflake.MachineID(id))
 
@@ -47,7 +50,10 @@ func MachineId() uint16 {
 }
 
 func NextId() string {
-	id, _ := _sf.NextID()
+	id, err := _sf.NextID()
+	if err != nil {
+		panic(err)
+	}
 	return strconv.FormatUint(id, 10)
 }
 
