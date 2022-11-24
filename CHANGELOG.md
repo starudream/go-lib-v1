@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.4.0](https://github.com/starudream/go-lib/compare/v1.3.1...v1.4.0) (2022-11-16)
+
+
+### Features
+
+* add helper function for httpx ([953e9ef](https://github.com/starudream/go-lib/commit/953e9ef5e3aa3debcf7090d4d05e76c1af190da8))
+* **errx:** add pkg caller ([3274289](https://github.com/starudream/go-lib/commit/327428957a2c65c1b05a76058e166ba65e78b3ff))
+* **seq:** add short uuid ([349a8a7](https://github.com/starudream/go-lib/commit/349a8a736319a871852ba70aa1373020ac72795d))
+* **seq:** add sonyflake ([19a465b](https://github.com/starudream/go-lib/commit/19a465b4465449573b0c15f6ff4fe30e0f56ad9b))
+* **seq:** add uuid ([7d74bda](https://github.com/starudream/go-lib/commit/7d74bda102caccc18e0544371dd6a991f24f70dd))
+
+
+### Bug Fixes
+
+* **seq:** panic when sonyflake generate fail ([b87306a](https://github.com/starudream/go-lib/commit/b87306a1eb5be6f99ee3b36e0587af89e511a49f))
+
 ## [1.3.1](https://github.com/starudream/go-lib/compare/v1.3.0...v1.3.1) (2022-09-09)
 
 
