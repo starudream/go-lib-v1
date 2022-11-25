@@ -9,6 +9,8 @@ import (
 	"github.com/starudream/go-lib/internal/ilog"
 )
 
+type L zerolog.Logger
+
 var _l zerolog.Logger
 
 func Logger() zerolog.Logger {

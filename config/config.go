@@ -56,6 +56,11 @@ var (
 
 	Set        = _v.Set
 	SetDefault = _v.SetDefault
+
+	BindPFlag      = _v.BindPFlag
+	BindPFlags     = _v.BindPFlags
+	BindFlagValue  = _v.BindFlagValue
+	BindFlagValues = _v.BindFlagValues
 )
 
 func UnmarshalKeyTo[T any](key string) (t T, err error) {
