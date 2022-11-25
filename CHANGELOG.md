@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.1](https://github.com/starudream/go-lib/compare/v1.4.0...v1.4.1) (2022-11-25)
+
+
+### Features
+
+* add function ([cc9cc50](https://github.com/starudream/go-lib/commit/cc9cc50b0296250913a7f739616aaf0d1243de9b))
+
 ## [1.4.0](https://github.com/starudream/go-lib/compare/v1.3.1...v1.4.0) (2022-11-16)
 
 
