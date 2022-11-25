@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.2](https://github.com/starudream/go-lib/compare/v1.4.1...v1.4.2) (2022-11-25)
+
+
+### Bug Fixes
+
+* **log:** fix Logger ([071dff9](https://github.com/starudream/go-lib/commit/071dff9f9b600f362ca66151cf12ac19ce0d41bd))
+
+
+### release
+
+* 1.4.2 ([919295e](https://github.com/starudream/go-lib/commit/919295ed2f1df40649ca6fe3900ec176a8975c69))
+
 ## [1.4.1](https://github.com/starudream/go-lib/compare/v1.4.0...v1.4.1) (2022-11-25)
 
 
