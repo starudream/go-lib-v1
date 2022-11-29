@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.4.3](https://github.com/starudream/go-lib/compare/v1.4.2...v1.4.3) (2022-11-29)
+
+
+### Features
+
+* **app:** add init function ([e6dd394](https://github.com/starudream/go-lib/commit/e6dd394a8508271c51a16b11412e7f733916495e))
+
+
+### release
+
+* 1.4.3 ([e611b8f](https://github.com/starudream/go-lib/commit/e611b8faa8fe9c887c48da2e18820424af3578f9))
+
 ## [1.4.2](https://github.com/starudream/go-lib/compare/v1.4.1...v1.4.2) (2022-11-25)
 
 
