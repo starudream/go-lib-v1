@@ -15,6 +15,7 @@ import (
 
 func main() {
 	log.Attach("app", "example-simple")
+	app.Init(func() error { log.Info().Msg("init"); return nil })
 	app.Add(wrapError(TestAppTime))
 	app.Add(wrapError(TestConfig))
 	app.Add(wrapError(TestErrx))
@@ -26,6 +27,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
+	log.Info().Msg("success")
 }
 
 func wrapError(f func()) func(ctx context.Context) error {

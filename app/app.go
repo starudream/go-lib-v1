@@ -22,9 +22,18 @@ var (
 	cancel context.CancelFunc
 	eg     *errgroup.Group
 
+	is []I
 	ss []S
 	fs []F
 )
+
+type I func() error
+
+func Init(_is ...I) {
+	mu.Lock()
+	defer mu.Unlock()
+	is = append(is, _is...)
+}
 
 type S func(ctx context.Context) error
 
@@ -53,6 +62,15 @@ func OnceGo() error {
 func internalGo(once bool) error {
 	mu.Lock()
 	defer mu.Unlock()
+
+	initing = time.Now()
+
+	for i := 0; i < len(is); i++ {
+		ie := is[i]()
+		if ie != nil {
+			return ie
+		}
+	}
 
 	running = time.Now()
 
