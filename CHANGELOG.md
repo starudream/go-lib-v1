@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.4](https://github.com/starudream/go-lib/compare/v1.4.3...v1.4.4) (2022-11-30)
+
+
+### Performance Improvements
+
+* logger use INFO level ([58e22ad](https://github.com/starudream/go-lib/commit/58e22ad968ec8291943a8e044e4f09c1aed2330a))
+
 ## [1.4.3](https://github.com/starudream/go-lib/compare/v1.4.2...v1.4.3) (2022-11-29)
 
 
