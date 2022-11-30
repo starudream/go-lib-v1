@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.5](https://github.com/starudream/go-lib/compare/v1.4.4...v1.4.5) (2022-11-30)
+
+
+### release
+
+* 1.4.5 ([30c1190](https://github.com/starudream/go-lib/commit/30c11906adc1315b6b100f56e393683166e3d910))
+
 ## [1.4.4](https://github.com/starudream/go-lib/compare/v1.4.3...v1.4.4) (2022-11-30)
 
 
