@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.0](https://github.com/starudream/go-lib/compare/v1.4.5...v1.5.0) (2022-12-01)
+
+
+### Features
+
+* **config:** add auto read file ([ea62503](https://github.com/starudream/go-lib/commit/ea6250364fe046347040e96e592784179a5ac5e7))
+
 ## [1.4.5](https://github.com/starudream/go-lib/compare/v1.4.4...v1.4.5) (2022-11-30)
 
 
