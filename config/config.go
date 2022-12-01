@@ -25,9 +25,17 @@ var _v = func() *viper.Viper {
 		} else {
 			ilog.X.Info().Msgf("read config file success file=%s", v.ConfigFileUsed())
 		}
+	} else {
+		err := v.ReadInConfig()
+		if err == nil {
+			ilog.X.Info().Msgf("read config file success file=%s", v.ConfigFileUsed())
+		}
 	}
 
-	ilog.X.Debug().Msgf("settings: %s", json.MustMarshalString(v.AllSettings()))
+	ss := v.AllSettings()
+	if len(ss) != 0 {
+		ilog.X.Debug().Msgf("settings: %s", json.MustMarshalString(ss))
+	}
 
 	return v
 }()

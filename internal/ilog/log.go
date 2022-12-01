@@ -8,7 +8,7 @@ import (
 )
 
 var X = func() zerolog.Logger {
-	lc := zerolog.New(&zerolog.ConsoleWriter{Out: colorable.NewColorableStdout(), TimeFormat: constant.LoggerTimeFormat}).Level(zerolog.InfoLevel).With()
+	lc := zerolog.New(&zerolog.ConsoleWriter{Out: colorable.NewColorableStdout(), TimeFormat: constant.LoggerTimeFormat}).Level(zerolog.DebugLevel).With()
 	if constant.VERSION != "" {
 		lc = lc.Str("version", constant.VERSION)
 	}
