@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.1](https://github.com/starudream/go-lib/compare/v1.5.0...v1.5.1) (2022-12-02)
+
+
+### Performance Improvements
+
+* **config:** perfect config log ([6a566a1](https://github.com/starudream/go-lib/commit/6a566a13718be73c2b4fbf7cab931917209ff701))
+
 ## [1.5.0](https://github.com/starudream/go-lib/compare/v1.4.5...v1.5.0) (2022-12-01)
 
 
