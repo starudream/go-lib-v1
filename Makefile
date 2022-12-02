@@ -9,9 +9,8 @@ BITTAGS := viper_logger
 LDFLAGS := -s -w
 LDFLAGS += -X "$(MODULE)/constant.VERSION=$(VERSION)"
 LDFLAGS += -X "$(MODULE)/constant.BIDTIME=$(BIDTIME)"
+LDFLAGS += -X "$(MODULE)/constant.NAME=starudream"
 LDFLAGS += -X "$(MODULE)/constant.PREFIX=app"
-
-export APP_CONFIG_PATH = $(shell pwd)/config.yaml
 
 .PHONY: tidy
 tidy:

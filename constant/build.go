@@ -3,6 +3,6 @@ package constant
 var (
 	VERSION = ""
 	BIDTIME = ""
-
-	PREFIX = ""
+	NAME    = ""
+	PREFIX  = ""
 )

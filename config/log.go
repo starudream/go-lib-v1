@@ -22,11 +22,11 @@ func New(opts ...viper.Option) *viper.Viper {
 func initLogger() {
 	jww.TRACE = newLogger(zerolog.TraceLevel)
 	jww.DEBUG = newLogger(zerolog.DebugLevel)
-	jww.INFO = newLogger(zerolog.InfoLevel)
+	jww.INFO = newLogger(zerolog.DebugLevel)
 	jww.WARN = newLogger(zerolog.WarnLevel)
 	jww.ERROR = newLogger(zerolog.ErrorLevel)
-	jww.CRITICAL = newLogger(zerolog.FatalLevel)
-	jww.FATAL = newLogger(zerolog.FatalLevel)
+	jww.CRITICAL = newLogger(zerolog.ErrorLevel)
+	jww.FATAL = newLogger(zerolog.ErrorLevel)
 }
 
 func newLogger(level zerolog.Level) *log.Logger {

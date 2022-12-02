@@ -1,6 +1,8 @@
 package config
 
 import (
+	"os"
+	"path/filepath"
 	"strings"
 
 	"github.com/spf13/viper"
@@ -11,7 +13,10 @@ import (
 )
 
 var _v = func() *viper.Viper {
+	viper.SupportedExts = []string{"yaml", "yml", "json", "toml"}
+
 	v := New()
+	v.SetConfigName("config")
 	v.SetEnvPrefix(strings.ToUpper(constant.PREFIX))
 	v.SetEnvKeyReplacer(strings.NewReplacer("-", "_", ".", "_"))
 	v.AutomaticEnv()
@@ -26,6 +31,18 @@ var _v = func() *viper.Viper {
 			ilog.X.Info().Msgf("read config file success file=%s", v.ConfigFileUsed())
 		}
 	} else {
+		if dir, err := os.Getwd(); err == nil {
+			v.AddConfigPath(dir)
+		}
+		if file, err := os.Executable(); err == nil {
+			v.AddConfigPath(filepath.Dir(file))
+		}
+		if dir, err := os.UserHomeDir(); err == nil {
+			v.AddConfigPath(dir)
+		}
+		if dir, err := os.UserConfigDir(); err == nil && constant.NAME != "" {
+			v.AddConfigPath(filepath.Join(dir, constant.NAME))
+		}
 		err := v.ReadInConfig()
 		if err == nil {
 			ilog.X.Info().Msgf("read config file success file=%s", v.ConfigFileUsed())

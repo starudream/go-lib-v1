@@ -29,7 +29,7 @@ func (l *logger) Debug(msg string, kvs ...any) {
 }
 
 func (l *logger) Info(msg string, kvs ...any) {
-	ilog.X.Info().CallerSkipFrame(1).Msg(jwwLogMessage(msg, kvs...))
+	ilog.X.Debug().CallerSkipFrame(1).Msg(jwwLogMessage(msg, kvs...))
 }
 
 func (l *logger) Warn(msg string, kvs ...any) {
