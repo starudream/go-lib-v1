@@ -2,6 +2,8 @@ package log
 
 import (
 	"io"
+	"strconv"
+	"strings"
 
 	"github.com/rs/zerolog"
 
@@ -13,6 +15,7 @@ import (
 
 func init() {
 	zerolog.CallerSkipFrameCount = 2
+	zerolog.CallerMarshalFunc = customCallerMarshalFunc
 	zerolog.InterfaceMarshalFunc = json.Marshal
 	zerolog.TimeFieldFormat = constant.LoggerTimeFormat
 
@@ -59,4 +62,23 @@ func init() {
 	}()
 
 	SetLogger(l)
+}
+
+func customCallerMarshalFunc(_ uintptr, file string, line int) string {
+	fs := strings.Split(file, "/")
+	idx := func() int {
+		if len(fs) < 2 {
+			return 0
+		}
+		for i := 0; i < len(fs); i++ {
+			if strings.Contains(fs[i], "@") {
+				if i > 0 {
+					return i - 1
+				}
+				return 0
+			}
+		}
+		return len(fs) - 2
+	}()
+	return strings.Join(fs[idx:], "/") + ":" + strconv.Itoa(line)
 }
