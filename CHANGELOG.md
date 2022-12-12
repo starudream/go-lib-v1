@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.5.3](https://github.com/starudream/go-lib/compare/v1.5.2...v1.5.3) (2022-12-12)
+
+
+### Build System
+
+* **deps:** bump dependencies ([5fa2c97](https://github.com/starudream/go-lib/commit/5fa2c975445956f4502174d3d38d0b266c6da8fd))
+
 ## [1.5.2](https://github.com/starudream/go-lib/compare/v1.5.1...v1.5.2) (2022-12-07)
 
 
