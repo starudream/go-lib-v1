@@ -3,7 +3,7 @@ module github.com/starudream/go-lib
 go 1.18
 
 require (
-	github.com/brianvoe/gofakeit/v6 v6.19.0
+	github.com/brianvoe/gofakeit/v6 v6.20.1
 	github.com/davecgh/go-spew v1.1.1
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/google/uuid v1.3.0
