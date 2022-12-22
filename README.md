@@ -1,7 +1,7 @@
 # GO
 
-![Golang](https://img.shields.io/github/workflow/status/starudream/go-lib/Golang/master?style=for-the-badge)
-![Release](https://img.shields.io/github/v/release/starudream/go-lib?include_prereleases&style=for-the-badge)
+![Golang](https://img.shields.io/github/actions/workflow/status/starudream/go-lib/golang.yml?label=golang&style=for-the-badge)
+![Release](https://img.shields.io/github/v/release/starudream/go-lib?include_prereleases&sort=semver&style=for-the-badge)
 ![License](https://img.shields.io/github/license/starudream/go-lib?style=for-the-badge)
 
 ## Install
