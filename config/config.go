@@ -5,17 +5,15 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/spf13/viper"
-
 	"github.com/starudream/go-lib/codec/json"
 	"github.com/starudream/go-lib/constant"
+
 	"github.com/starudream/go-lib/internal/ilog"
+	"github.com/starudream/go-lib/internal/viper"
 )
 
 var _v = func() *viper.Viper {
-	viper.SupportedExts = []string{"yaml", "yml", "json", "toml"}
-
-	v := New()
+	v := viper.NewWithOptions(viper.WithLogger(&logger{}))
 	v.SetConfigName("config")
 	v.SetEnvPrefix(strings.ToUpper(constant.PREFIX))
 	v.SetEnvKeyReplacer(strings.NewReplacer("-", "_", ".", "_"))

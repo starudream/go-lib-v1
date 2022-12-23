@@ -35,4 +35,4 @@ example-bot:
 .PHONY: lint
 lint:
 	@$(MAKE) tidy
-	golangci-lint run --skip-dirs-use-default
+	golangci-lint run --skip-dirs internal --skip-dirs errx
