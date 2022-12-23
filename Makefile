@@ -5,7 +5,7 @@ GO      ?= GO111MODULE=on go
 VERSION ?= $(shell git describe --tags 2>/dev/null || echo "dev")
 BIDTIME ?= $(shell date +%FT%T%z)
 
-BITTAGS := viper_logger
+BITTAGS :=
 LDFLAGS := -s -w
 LDFLAGS += -X "$(MODULE)/constant.VERSION=$(VERSION)"
 LDFLAGS += -X "$(MODULE)/constant.BIDTIME=$(BIDTIME)"
