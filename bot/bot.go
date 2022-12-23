@@ -2,6 +2,7 @@ package bot
 
 import (
 	"github.com/starudream/go-lib/config"
+
 	"github.com/starudream/go-lib/internal/ilog"
 )
 

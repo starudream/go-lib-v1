@@ -9,9 +9,10 @@ import (
 	"github.com/starudream/go-lib/codec/json"
 	"github.com/starudream/go-lib/codec/xml"
 	"github.com/starudream/go-lib/config"
+	"github.com/starudream/go-lib/log"
+
 	"github.com/starudream/go-lib/internal/httpproxy"
 	"github.com/starudream/go-lib/internal/ilog"
-	"github.com/starudream/go-lib/log"
 )
 
 type (

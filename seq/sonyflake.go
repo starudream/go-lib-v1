@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/starudream/go-lib/config"
+
 	"github.com/starudream/go-lib/internal/ilog"
 	"github.com/starudream/go-lib/internal/sonyflake"
 )
