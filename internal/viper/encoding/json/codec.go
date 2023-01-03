@@ -1,8 +1,10 @@
 package json
 
 import (
-	"encoding/json"
+	jsoniter "github.com/json-iterator/go"
 )
+
+var json = jsoniter.ConfigCompatibleWithStandardLibrary
 
 // Codec implements the encoding.Encoder and encoding.Decoder interfaces for JSON encoding.
 type Codec struct{}
