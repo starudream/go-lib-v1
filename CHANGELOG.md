@@ -1,5 +1,24 @@
 # Changelog
 
+## [1.6.0](https://github.com/starudream/go-lib/compare/v1.5.3...v1.6.0) (2023-01-03)
+
+
+### Features
+
+* **config:** viper ([c1002db](https://github.com/starudream/go-lib/commit/c1002db5f1b4dfa5dec11d04c63578823f434757))
+
+
+### Bug Fixes
+
+* **build:** remove viper build tag ([224aef3](https://github.com/starudream/go-lib/commit/224aef3e0ca85c928d1ca89ce76ec887117bf58a))
+* remove errx ([f498e80](https://github.com/starudream/go-lib/commit/f498e807cc2d08a099df0734f8a9022dc8bdaa8c))
+
+
+### Performance Improvements
+
+* perfect code style ([a5ca8be](https://github.com/starudream/go-lib/commit/a5ca8be081bc71197d722a9319f3fa51d67b8706))
+* **viper:** use json iterator instead of std json ([00225fa](https://github.com/starudream/go-lib/commit/00225fa6baa0a4fa5752b283e0c86860c60a1fa7))
+
 ## [1.5.3](https://github.com/starudream/go-lib/compare/v1.5.2...v1.5.3) (2022-12-12)
 
 
