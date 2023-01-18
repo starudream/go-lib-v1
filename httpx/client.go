@@ -40,6 +40,10 @@ func init() {
 	}
 }
 
+func Client() *resty.Client {
+	return _c
+}
+
 func SetTimeout(timeout time.Duration) {
 	_c.SetTimeout(timeout)
 }
