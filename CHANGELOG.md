@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.7.0](https://github.com/starudream/go-lib/compare/v1.6.0...v1.7.0) (2023-01-18)
+
+
+### Features
+
+* **router:** add router ([846c80f](https://github.com/starudream/go-lib/commit/846c80f6e9564000171c6311f50e2e438c2fe58b))
+
+
+### Performance Improvements
+
+* **cache:** add cache ([985c591](https://github.com/starudream/go-lib/commit/985c5912f5ab5ec4be87531cc38f355e51c9d4bd))
+* **config:** rename file name ([05dd5b6](https://github.com/starudream/go-lib/commit/05dd5b6c0b9c2509ebd14d91f7a9b5e17f7c7109))
+* **httpx:** export client ([b703931](https://github.com/starudream/go-lib/commit/b703931ccfba67499ecc8a30afb6b8c82e922539))
+
 ## [1.6.0](https://github.com/starudream/go-lib/compare/v1.5.3...v1.6.0) (2023-01-03)
 
 
