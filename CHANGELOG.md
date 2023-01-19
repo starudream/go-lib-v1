@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.2](https://github.com/starudream/go-lib/compare/v1.7.1...v1.7.2) (2023-01-19)
+
+
+### Performance Improvements
+
+* **router:** add tid to context ([6983e60](https://github.com/starudream/go-lib/commit/6983e60243c487b760bcbfd9d6474f0013883211))
+
 ## [1.7.1](https://github.com/starudream/go-lib/compare/v1.7.0...v1.7.1) (2023-01-19)
 
 
