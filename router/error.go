@@ -49,6 +49,11 @@ func (e *Error) Error() (s string) {
 	return
 }
 
+func (e *Error) WithMessage(s string, v ...any) *Error {
+	e.Message = format(s, v...)
+	return e
+}
+
 func (e *Error) WithMetadata(kvs ...any) *Error {
 	e.Metadata, e.ks = map[string]any{}, []string{}
 	return e.AppendMetadata(kvs...)
