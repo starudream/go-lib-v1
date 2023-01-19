@@ -96,6 +96,11 @@ func (c *Context) Query(key string) string {
 	return c.query.Get(key)
 }
 
+func (c *Context) AllQuery() url.Values {
+	c.queryOnce.Do(func() { c.query = c.Request.URL.Query() })
+	return c.query
+}
+
 func (c *Context) SetHeader(key, value string) {
 	if value == "" {
 		c.Writer.Header().Del(key)
@@ -106,6 +111,10 @@ func (c *Context) SetHeader(key, value string) {
 
 func (c *Context) GetHeader(key string) string {
 	return c.Request.Header.Get(key)
+}
+
+func (c *Context) SetStatusCode(statusCode int) {
+	c.Writer.WriteHeader(statusCode)
 }
 
 func (c *Context) BodyBytes() ([]byte, error) {
@@ -149,6 +158,19 @@ func (c *Context) JSON(code int, v any) {
 	_, _ = c.Writer.Write(json.MustMarshal(v))
 }
 
-func (c *Context) JOK(v any) {
+func (c *Context) JSONOK(v any) {
 	c.JSON(http.StatusOK, v)
+}
+
+func (c *Context) FILE(filepath string) {
+	http.ServeFile(c.Writer, c.Request, filepath)
+}
+
+func (c *Context) ATTACHMENT(filepath, filename string) {
+	if isASCII(filename) {
+		c.Writer.Header().Set("Content-Disposition", `attachment; filename="`+filename+`"`)
+	} else {
+		c.Writer.Header().Set("Content-Disposition", `attachment; filename*=UTF-8''`+url.QueryEscape(filename))
+	}
+	http.ServeFile(c.Writer, c.Request, filepath)
 }

@@ -8,8 +8,10 @@ import (
 )
 
 func Test(t *testing.T) {
-	Handle(http.MethodGet, "/", func(c *Context) { c.JOK(M{"foo": "bar"}) })
-	Handle(http.MethodGet, "/hello", func(c *Context) { c.JOK(M{"bar": "foo"}) })
+	Handle(http.MethodGet, "/", func(c *Context) { c.JSONOK(M{"foo": "bar"}) })
+	Handle(http.MethodGet, "/hello", func(c *Context) { c.JSONOK(M{"bar": "foo"}) })
+	Handle(http.MethodGet, "/download", func(c *Context) { c.FILE("./util.go") })
+	Handle(http.MethodGet, "/attachment", func(c *Context) { c.ATTACHMENT("./util.go", "util.go") })
 
 	T(t,
 		TCase{
@@ -23,6 +25,16 @@ func Test(t *testing.T) {
 		TCase{
 			Method: http.MethodGet,
 			Path:   "/hello",
+			Dump:   true,
+		},
+		TCase{
+			Method: http.MethodGet,
+			Path:   "/download",
+			Dump:   true,
+		},
+		TCase{
+			Method: http.MethodGet,
+			Path:   "/attachment",
 			Dump:   true,
 		},
 	)

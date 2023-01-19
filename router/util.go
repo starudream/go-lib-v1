@@ -2,9 +2,19 @@ package router
 
 import (
 	"fmt"
+	"unicode"
 )
 
 type M = map[string]any
+
+func isASCII(s string) bool {
+	for i := 0; i < len(s); i++ {
+		if s[i] > unicode.MaxASCII {
+			return false
+		}
+	}
+	return true
+}
 
 func stringNotEmpty(vs ...string) string {
 	for i := 0; i < len(vs); i++ {
