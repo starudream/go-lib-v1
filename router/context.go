@@ -62,6 +62,11 @@ func (c *Context) Value(key any) any {
 	return c.Request.Context().Value(key)
 }
 
+func (c *Context) WithContext(ctx context.Context) *Context {
+	c.Request = c.Request.WithContext(ctx)
+	return c
+}
+
 // --------------------------------------------------------------------------------
 
 func (c *Context) Set(key string, value any) {

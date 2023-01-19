@@ -49,7 +49,9 @@ func Logger(h Handler) Handler {
 
 		c.Writer = httpresponse.NewResponse(c.Writer)
 
-		h(c)
+		nc := c.WithContext(log.With().Str("tid", tid).Logger().WithContext(c))
+
+		h(nc)
 
 		resp, sc := httpresponse.GetResponse(c.Writer)
 
