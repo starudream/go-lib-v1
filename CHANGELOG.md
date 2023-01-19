@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.7.1](https://github.com/starudream/go-lib/compare/v1.7.0...v1.7.1) (2023-01-19)
+
+
+### Performance Improvements
+
+* **router:** add helper functions ([db2ce72](https://github.com/starudream/go-lib/commit/db2ce7290cdaa889603ff5a4de44d2650111d278))
+* **router:** with message ([f71c56c](https://github.com/starudream/go-lib/commit/f71c56ccdd5a197cdb19dbc5b18d3ce4d58495e4))
+
 ## [1.7.0](https://github.com/starudream/go-lib/compare/v1.6.0...v1.7.0) (2023-01-18)
 
 
