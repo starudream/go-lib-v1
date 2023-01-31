@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.8.0](https://github.com/starudream/go-lib/compare/v1.7.2...v1.8.0) (2023-01-31)
+
+
+### release
+
+* 1.8.0 ([755dc77](https://github.com/starudream/go-lib/commit/755dc7790bb100b86f3f225f92085c376bb92c65))
+
 ## [1.7.2](https://github.com/starudream/go-lib/compare/v1.7.1...v1.7.2) (2023-01-19)
 
 
