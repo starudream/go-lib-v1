@@ -1,11 +1,9 @@
-package router
+package cx
 
 import (
 	"fmt"
 	"unicode"
 )
-
-type M = map[string]any
 
 func isASCII(s string) bool {
 	for i := 0; i < len(s); i++ {

@@ -8,10 +8,10 @@ import (
 	"testing"
 )
 
-type TCase struct {
-	Method string
-	Path   string
-	Body   string
+type TC struct {
+	Method  string
+	Pattern string
+	Body    string
 
 	Dump bool
 
@@ -19,13 +19,13 @@ type TCase struct {
 	Verify  func(t *testing.T, resp *http.Response, code int, body string)
 }
 
-func T(t *testing.T, cases ...TCase) {
+func TE(t *testing.T, cases ...TC) {
 	t.Helper()
 
 	for i := 0; i < len(cases); i++ {
 		c := cases[i]
 
-		req, err := http.NewRequest(c.Method, c.Path, strings.NewReader(c.Body))
+		req, err := http.NewRequest(c.Method, c.Pattern, strings.NewReader(c.Body))
 		if err != nil {
 			t.Fatal(err)
 		}

@@ -1,4 +1,4 @@
-package router
+package cx
 
 import (
 	"bytes"
@@ -9,23 +9,64 @@ import (
 	"sync"
 	"time"
 
+	"github.com/go-chi/chi/v5"
 	"github.com/spf13/cast"
 
 	"github.com/starudream/go-lib/codec/json"
+
+	"github.com/starudream/go-lib/router/dx"
 )
 
 type Context struct {
 	Request *http.Request
 	Writer  http.ResponseWriter
 
-	mu sync.RWMutex
-
+	ctx    *chi.Context
+	mu     sync.RWMutex
 	values map[string]any
-
-	params    Params
-	query     url.Values
-	queryOnce sync.Once
+	query  url.Values
 }
+
+type ctxKey struct{}
+
+func New(ctx context.Context, r *http.Request, w http.ResponseWriter) *Context {
+	if ctx == nil {
+		ctx = context.Background()
+	}
+
+	if c, ok := ctx.(*Context); ok {
+		return c
+	}
+
+	if c, ok := ctx.Value(ctxKey{}).(*Context); ok {
+		return c
+	}
+
+	c := &Context{
+		Request: r,
+		Writer:  w,
+		values:  map[string]any{},
+	}
+
+	if r != nil {
+		c.ctx = chi.RouteContext(r.Context())
+		c.query = r.URL.Query()
+	}
+
+	ctx = context.WithValue(ctx, ctxKey{}, c)
+
+	if r != nil {
+		c.Request = r.WithContext(ctx)
+	}
+
+	return c
+}
+
+func FromRequest(req *http.Request) *Context {
+	return New(req.Context(), nil, nil)
+}
+
+// --------------------------------------------------------------------------------
 
 var _ context.Context = (*Context)(nil)
 
@@ -90,19 +131,32 @@ func (c *Context) GetString(key string) string {
 	return cast.ToString(value)
 }
 
+func (c *Context) GetBool(key string) bool {
+	value, _ := c.Get(key)
+	return cast.ToBool(value)
+}
+
+func (c *Context) GetInt(key string) int {
+	value, _ := c.Get(key)
+	return cast.ToInt(value)
+}
+
+func (c *Context) GetFloat64(key string) float64 {
+	value, _ := c.Get(key)
+	return cast.ToFloat64(value)
+}
+
 // --------------------------------------------------------------------------------
 
 func (c *Context) Param(key string) string {
-	return c.params.ByName(key)
+	return c.ctx.URLParam(key)
 }
 
 func (c *Context) Query(key string) string {
-	c.queryOnce.Do(func() { c.query = c.Request.URL.Query() })
 	return c.query.Get(key)
 }
 
 func (c *Context) AllQuery() url.Values {
-	c.queryOnce.Do(func() { c.query = c.Request.URL.Query() })
 	return c.query
 }
 
@@ -134,12 +188,12 @@ func (c *Context) BodyBytes() ([]byte, error) {
 // --------------------------------------------------------------------------------
 
 func (c *Context) GetContentType() string {
-	return c.GetHeader("Content-Type")
+	return c.GetHeader(dx.ContentType)
 }
 
 func (c *Context) GetAuthorization() string {
 	return stringNotEmpty(
-		c.GetHeader("Authorization"),
+		c.GetHeader(dx.Authorization),
 		c.GetHeader("Token"),
 		c.Query("authorization"),
 		c.Query("token"),
@@ -147,7 +201,7 @@ func (c *Context) GetAuthorization() string {
 }
 
 func (c *Context) GetRequestId() string {
-	return c.GetHeader("X-Request-ID")
+	return c.GetHeader(dx.XRequestId)
 }
 
 // --------------------------------------------------------------------------------
@@ -158,7 +212,7 @@ func (c *Context) TEXT(s string, v ...any) {
 }
 
 func (c *Context) JSON(code int, v any) {
-	c.Writer.Header().Set("Content-Type", "application/json")
+	c.Writer.Header().Set(dx.ContentType, dx.ApplicationJSON)
 	c.Writer.WriteHeader(code)
 	_, _ = c.Writer.Write(json.MustMarshal(v))
 }
@@ -173,9 +227,9 @@ func (c *Context) FILE(filepath string) {
 
 func (c *Context) ATTACHMENT(filepath, filename string) {
 	if isASCII(filename) {
-		c.Writer.Header().Set("Content-Disposition", `attachment; filename="`+filename+`"`)
+		c.Writer.Header().Set(dx.ContentDisposition, `attachment; filename="`+filename+`"`)
 	} else {
-		c.Writer.Header().Set("Content-Disposition", `attachment; filename*=UTF-8''`+url.QueryEscape(filename))
+		c.Writer.Header().Set(dx.ContentDisposition, `attachment; filename*=UTF-8''`+url.QueryEscape(filename))
 	}
 	http.ServeFile(c.Writer, c.Request, filepath)
 }

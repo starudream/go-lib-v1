@@ -1,4 +1,4 @@
-package router
+package ex
 
 import (
 	"fmt"
@@ -9,13 +9,13 @@ import (
 )
 
 var (
-	ErrBadRequest       = NewError(http.StatusBadRequest, "bad request")
-	ErrUnauthorized     = NewError(http.StatusUnauthorized, "unauthorized")
-	ErrForbidden        = NewError(http.StatusForbidden, "forbidden")
-	ErrNotFound         = NewError(http.StatusNotFound, "not found")
-	ErrMethodNotAllowed = NewError(http.StatusMethodNotAllowed, "method not allowed")
-	ErrConflict         = NewError(http.StatusConflict, "conflict")
-	ErrInternal         = NewError(http.StatusInternalServerError, "internal server error")
+	BadRequest       = New(http.StatusBadRequest, "bad request")
+	Unauthorized     = New(http.StatusUnauthorized, "unauthorized")
+	Forbidden        = New(http.StatusForbidden, "forbidden")
+	NotFound         = New(http.StatusNotFound, "not found")
+	MethodNotAllowed = New(http.StatusMethodNotAllowed, "method not allowed")
+	Conflict         = New(http.StatusConflict, "conflict")
+	Internal         = New(http.StatusInternalServerError, "internal server error")
 )
 
 type Error struct {
@@ -29,7 +29,7 @@ type Error struct {
 
 var _ error = (*Error)(nil)
 
-func NewError(code int, s string, v ...any) *Error {
+func New(code int, s string, v ...any) *Error {
 	return &Error{Code: code, Message: format(s, v...)}
 }
 
@@ -76,4 +76,11 @@ func (e *Error) AppendMetadata(kvs ...any) *Error {
 		e.ks = append(e.ks, k)
 	}
 	return e
+}
+
+func format(s string, v ...any) string {
+	if len(v) == 0 {
+		return s
+	}
+	return fmt.Sprintf(s, v...)
 }
