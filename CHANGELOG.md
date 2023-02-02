@@ -1,5 +1,18 @@
 # Changelog
 
+## [1.10.0](https://github.com/starudream/go-lib/compare/v1.9.0...v1.10.0) (2023-02-02)
+
+
+### Features
+
+* **router:** add bind json and validator ([af91106](https://github.com/starudream/go-lib/commit/af91106ba9193739667ccf4a66d6ff266cd69ae3))
+* **validator:** add validator ([f2a8096](https://github.com/starudream/go-lib/commit/f2a8096f139491f0604d9efb8a557dd189cdde0a))
+
+
+### Performance Improvements
+
+* **internal:** version ([6079030](https://github.com/starudream/go-lib/commit/6079030186a52e31983aee32d5e37449c21827a5))
+
 ## [1.9.0](https://github.com/starudream/go-lib/compare/v1.8.0...v1.9.0) (2023-02-02)
 
 
