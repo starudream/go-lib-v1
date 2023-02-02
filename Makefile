@@ -12,20 +12,18 @@ LDFLAGS += -X "$(MODULE)/constant.BIDTIME=$(BIDTIME)"
 LDFLAGS += -X "$(MODULE)/constant.NAME=starudream"
 LDFLAGS += -X "$(MODULE)/constant.PREFIX=app"
 
-.PHONY: tidy
-tidy:
-	@$(GO) mod tidy
+.PHONY: bin
+bin:
+	@$(MAKE) bin-app bin-bot bin-server bin-simple
+
+bin-%:
+	@$(MAKE) tidy
+	CGO_ENABLED=1 $(GO) build -race -tags '$(BITTAGS)' -ldflags '$(LDFLAGS)' -o bin/example-$* $(MODULE)/example/$*
 
 .PHONY: example-simple
 example-simple:
 	@$(MAKE) tidy
 	CGO_ENABLED=1 $(GO) run -race -tags '$(BITTAGS)' -ldflags '$(LDFLAGS)' $(MODULE)/example/simple
-
-.PHONY: version-example-simple
-version-example-simple:
-	@$(MAKE) tidy
-	CGO_ENABLED=1 $(GO) build -race -tags '$(BITTAGS)' -ldflags '$(LDFLAGS)' -o bin/example-simple $(MODULE)/example/simple
-	go version -m bin/example-simple
 
 .PHONY: example-bot
 example-bot:
@@ -36,6 +34,10 @@ example-bot:
 example-server:
 	@$(MAKE) tidy
 	CGO_ENABLED=1 $(GO) run -race -tags '$(BITTAGS)' -ldflags '$(LDFLAGS)' $(MODULE)/example/server
+
+.PHONY: tidy
+tidy:
+	@$(GO) mod tidy
 
 .PHONY: lint
 lint:

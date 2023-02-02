@@ -80,7 +80,7 @@ func Register() {
 }
 
 func Server() {
-	s := &http.Server{Addr: addr, Handler: router.Handler()}
+	server := &http.Server{Addr: addr, Handler: router.Handler()}
 
 	ln, err := net.Listen("tcp", addr)
 	if err != nil {
@@ -88,7 +88,7 @@ func Server() {
 	}
 
 	go func() {
-		err = s.Serve(ln)
+		err = server.Serve(ln)
 		if err != nil {
 			panic(err)
 		}
