@@ -40,7 +40,7 @@ func Logger(c *Context) {
 	}
 
 	l.Info().
-		Str("type", c.Request.Header.Get(contentType)).
+		Str("type", filterFlags(c.Request.Header.Get(contentType))).
 		Msgf("req=%s", req)
 
 	c.Writer = httpresponse.NewResponse(c.Writer)
@@ -51,7 +51,9 @@ func Logger(c *Context) {
 
 	if len(resp) == 0 {
 		resp = rawDataEmpty
-	} else if bytes.Count(resp, []byte("\n")) > 10 {
+	} else if bytes.Count(resp, []byte("\n")) >= 10 {
+		resp = rawDataIgnore
+	} else if !isASCII(resp) {
 		resp = rawDataIgnore
 	}
 
@@ -62,7 +64,7 @@ func Logger(c *Context) {
 
 	l.WithLevel(lvl).
 		Int("code", statusCode).
-		Str("type", c.Writer.Header().Get(contentType)).
+		Str("type", filterFlags(c.Writer.Header().Get(contentType))).
 		Dur("took", time.Since(start)).
 		Msgf("resp=%s", resp)
 }

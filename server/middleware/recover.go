@@ -10,7 +10,7 @@ import (
 func Recover(c *Context) {
 	defer func() {
 		if err := recover(); err != nil {
-			log.Ctx(c).Error().Msgf("%v\n%s", err, debug.Stack())
+			log.Ctx(c).Error().Msgf("http panic recover: %v\n%s", err, debug.Stack())
 			c.AbortWithError(errx.ErrInternal)
 		}
 	}()
