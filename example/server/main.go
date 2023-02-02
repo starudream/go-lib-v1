@@ -1,12 +1,13 @@
 package main
 
 import (
-	"context"
-	"errors"
+	"bytes"
 	"fmt"
+	"io"
 	"net"
 	"net/http"
 	"net/http/httputil"
+	"strings"
 	"time"
 
 	"github.com/starudream/go-lib/constant"
@@ -19,16 +20,22 @@ const addr = ":80"
 
 func main() {
 	Register()
+	Server()
 
-	Server(5 * time.Second)
+	Do(http.MethodGet, "/")
+	Do(http.MethodGet, "/not")
+	Do(http.MethodGet, "/v1/log")
+	Do(http.MethodGet, "/v1/admin/verify")
+	Do(http.MethodGet, "/v1/foo")
+	Do(http.MethodGet, "/v2/health")
+	Do(http.MethodGet, "/v2/panic")
 
-	Get("/")
-	Get("/not")
-	Get("/v1/hello")
-	Get("/v1/admin/verify")
-	Get("/v1/foo")
-	Get("/v2/health")
-	Get("/v2/panic")
+	Do(http.MethodPost, "/v2/validate", `{"nick": "jack"}`)
+
+}
+
+type User struct {
+	Name string `json:"name" validate:"required"`
 }
 
 func Register() {
@@ -38,7 +45,7 @@ func Register() {
 
 	g1 := router.Group("/v1")
 	{
-		g1.Handle(http.MethodGet, "/hello", func(c *router.Context) {
+		g1.Handle(http.MethodGet, "/log", func(c *router.Context) {
 			log.Ctx(c).Info().Msg("world")
 		})
 
@@ -63,10 +70,16 @@ func Register() {
 		g2.Handle(http.MethodGet, "/panic", func(c *router.Context) {
 			panic("test")
 		})
+
+		g2.Handle(http.MethodPost, "/validate", func(c *router.Context) {
+			if c.BindJSON(&User{}) != nil {
+				return
+			}
+		})
 	}
 }
 
-func Server(timeout time.Duration) {
+func Server() {
 	s := &http.Server{Addr: addr, Handler: router.Handler()}
 
 	ln, err := net.Listen("tcp", addr)
@@ -75,22 +88,32 @@ func Server(timeout time.Duration) {
 	}
 
 	go func() {
-		err := s.Serve(ln)
-		if err != nil && !errors.Is(err, http.ErrServerClosed) {
-			panic(err)
-		}
-
-		time.Sleep(timeout)
-
-		err = s.Shutdown(context.Background())
+		err = s.Serve(ln)
 		if err != nil {
 			panic(err)
 		}
 	}()
 }
 
-func Get(path string) {
-	resp, err := http.Get("http://localhost" + addr + path)
+var client = &http.Client{Timeout: 10 * time.Second}
+
+func Do(method, path string, body ...any) {
+	var bodyReader io.Reader
+	if len(body) > 0 {
+		switch v := body[0].(type) {
+		case string:
+			bodyReader = strings.NewReader(v)
+		case []byte:
+			bodyReader = bytes.NewReader(v)
+		}
+	}
+
+	req, err := http.NewRequest(method, "http://localhost"+addr+path, bodyReader)
+	if err != nil {
+		panic(err)
+	}
+
+	resp, err := client.Do(req)
 	if err != nil {
 		panic(err)
 	}

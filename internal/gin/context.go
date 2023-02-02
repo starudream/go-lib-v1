@@ -21,11 +21,9 @@ import (
 	"github.com/starudream/go-lib/errx"
 	"github.com/starudream/go-lib/log"
 
+	"github.com/starudream/go-lib/internal/gin/binding"
 	"github.com/starudream/go-lib/internal/gin/render"
 )
-
-// ContextKey is the key that a Context returns itself for.
-const ContextKey = "__$__CONTEXT_KEY__$__"
 
 // abortIndex represents a typical value used in abort functions.
 const abortIndex int8 = math.MaxInt8 >> 1
@@ -33,9 +31,9 @@ const abortIndex int8 = math.MaxInt8 >> 1
 // Context is the most important part of gin. It allows us to pass variables between middleware,
 // manage the flow, validate the JSON of a request and render a JSON response for example.
 type Context struct {
-	writermem responseWriter
-	Request   *http.Request
-	Writer    ResponseWriter
+	Request *http.Request
+	Writer  ResponseWriter
+	writer  responseWriter
 
 	Params   Params
 	handlers HandlersChain
@@ -72,7 +70,7 @@ type Context struct {
 /************************************/
 
 func (c *Context) reset() {
-	c.Writer = &c.writermem
+	c.Writer = &c.writer
 	c.Params = c.Params[:0]
 	c.handlers = nil
 	c.index = -1
@@ -91,13 +89,13 @@ func (c *Context) reset() {
 // This has to be used when the context has to be passed to a goroutine.
 func (c *Context) Copy() *Context {
 	cp := Context{
-		writermem: c.writermem,
-		Request:   c.Request,
-		Params:    c.Params,
-		engine:    c.engine,
+		writer:  c.writer,
+		Request: c.Request,
+		Params:  c.Params,
+		engine:  c.engine,
 	}
-	cp.writermem.ResponseWriter = nil
-	cp.Writer = &cp.writermem
+	cp.writer.w = nil
+	cp.Writer = &cp.writer
 	cp.index = abortIndex
 	cp.handlers = nil
 	cp.Keys = map[string]any{}
@@ -564,6 +562,23 @@ func (c *Context) SaveUploadedFile(file *multipart.FileHeader, dst string) error
 	return err
 }
 
+var BindErrorHandler func(c *Context, err error)
+
+// BindJSON decodes the json payload into the struct specified as a pointer.
+// It will abort the request with HTTP 400 if any error occurs.
+func (c *Context) BindJSON(obj any) error {
+	bs, err := c.GetRawData()
+	if err != nil {
+		c.AbortWithError(errx.ErrInternal.AppendMetadata("BindJSON", err))
+		return err
+	}
+	err = binding.JSON.Bind(bs, obj)
+	if err != nil {
+		BindErrorHandler(c, err)
+	}
+	return nil
+}
+
 // ClientIP implements one best effort algorithm to return the real client IP.
 // It called c.RemoteIP() under the hood, to check if the remote IP is a trusted proxy or not.
 // If it is it will then try to parse the headers defined in Engine.RemoteIPHeaders (defaulting to [X-Forwarded-For, X-Real-Ip]).
@@ -827,9 +842,6 @@ func (c *Context) Err() error {
 func (c *Context) Value(key any) any {
 	if key == 0 {
 		return c.Request
-	}
-	if key == ContextKey {
-		return c
 	}
 	if keyAsString, ok := key.(string); ok {
 		if val, exists := c.Get(keyAsString); exists {

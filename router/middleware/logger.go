@@ -8,8 +8,6 @@ import (
 	"github.com/starudream/go-lib/codec/json"
 	"github.com/starudream/go-lib/errx"
 	"github.com/starudream/go-lib/log"
-
-	"github.com/starudream/go-lib/internal/gin/httpresponse"
 )
 
 var (
@@ -43,11 +41,9 @@ func Logger(c *Context) {
 		Str("type", filterFlags(c.Request.Header.Get(contentType))).
 		Msgf("req=%s", req)
 
-	c.Writer = httpresponse.NewResponse(c.Writer)
-
 	c.Next()
 
-	resp, statusCode := httpresponse.GetResponse(c.Writer)
+	resp, statusCode := c.Writer.Data(), c.Writer.Status()
 
 	if len(resp) == 0 {
 		resp = rawDataEmpty

@@ -374,7 +374,7 @@ func parseIP(ip string) net.IP {
 // ServeHTTP conforms to the http.Handler interface.
 func (engine *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	c := engine.pool.Get().(*Context)
-	c.writermem.reset(w)
+	c.writer.reset(w)
 	c.Request = req
 	c.reset()
 
@@ -423,7 +423,7 @@ func (engine *Engine) handleHTTPRequest(c *Context) {
 			c.handlers = value.handlers
 			c.fullPath = value.fullPath
 			c.Next()
-			c.writermem.WriteHeaderNow()
+			c.writer.WriteHeaderNow()
 			return
 		}
 		if httpMethod != http.MethodConnect && rPath != "/" {
@@ -457,20 +457,20 @@ func (engine *Engine) handleHTTPRequest(c *Context) {
 var mimePlain = []string{"text/plain"}
 
 func serveError(c *Context, code int, defaultMessage []byte) {
-	c.writermem.status = code
+	c.writer.status = code
 	c.Next()
-	if c.writermem.Written() {
+	if c.writer.Written() {
 		return
 	}
-	if c.writermem.Status() == code {
-		c.writermem.Header()["Content-Type"] = mimePlain
+	if c.writer.Status() == code {
+		c.writer.Header()["Content-Type"] = mimePlain
 		_, err := c.Writer.Write(defaultMessage)
 		if err != nil {
 			log.Warn().Msgf("cannot write message to writer during serve error: %v", err)
 		}
 		return
 	}
-	c.writermem.WriteHeaderNow()
+	c.writer.WriteHeaderNow()
 }
 
 func redirectTrailingSlash(c *Context) {
@@ -509,5 +509,5 @@ func redirectRequest(c *Context) {
 	}
 	log.Debug().Msgf("redirecting request %d: %s --> %s", code, rPath, rURL)
 	http.Redirect(c.Writer, req, rURL, code)
-	c.writermem.WriteHeaderNow()
+	c.writer.WriteHeaderNow()
 }
