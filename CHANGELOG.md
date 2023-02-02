@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.10.1](https://github.com/starudream/go-lib/compare/v1.10.0...v1.10.1) (2023-02-02)
+
+
+### Bug Fixes
+
+* **internal:** fix return error ([51c9a96](https://github.com/starudream/go-lib/commit/51c9a96113d9181c8a0a4fd11684b24f8a71d06e))
+
 ## [1.10.0](https://github.com/starudream/go-lib/compare/v1.9.0...v1.10.0) (2023-02-02)
 
 
