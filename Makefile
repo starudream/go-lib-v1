@@ -32,6 +32,11 @@ example-bot:
 	@$(MAKE) tidy
 	CGO_ENABLED=1 $(GO) run -race -tags '$(BITTAGS)' -ldflags '$(LDFLAGS)' $(MODULE)/example/bot
 
+.PHONY: example-server
+example-server:
+	@$(MAKE) tidy
+	CGO_ENABLED=1 $(GO) run -race -tags '$(BITTAGS)' -ldflags '$(LDFLAGS)' $(MODULE)/example/server
+
 .PHONY: lint
 lint:
 	@$(MAKE) tidy
