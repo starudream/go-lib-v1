@@ -2,9 +2,13 @@ package httpresponse
 
 import (
 	"net/http"
+
+	"github.com/starudream/go-lib/internal/gin"
 )
 
 type Response struct {
+	gin.ResponseWriter
+
 	w http.ResponseWriter
 
 	bs []byte
