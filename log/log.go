@@ -14,6 +14,20 @@ import (
 	"github.com/starudream/go-lib/internal/ilog"
 )
 
+type Level = zerolog.Level
+
+var (
+	TraceLevel = zerolog.TraceLevel
+	DebugLevel = zerolog.DebugLevel
+	InfoLevel  = zerolog.InfoLevel
+	WarnLevel  = zerolog.WarnLevel
+	ErrorLevel = zerolog.ErrorLevel
+	FatalLevel = zerolog.FatalLevel
+	PanicLevel = zerolog.PanicLevel
+	NoLevel    = zerolog.NoLevel
+	Disabled   = zerolog.Disabled
+)
+
 func init() {
 	zerolog.CallerSkipFrameCount = 2
 	zerolog.CallerMarshalFunc = customCallerMarshalFunc
