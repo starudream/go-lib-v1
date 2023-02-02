@@ -19,6 +19,7 @@ import (
 	"time"
 
 	"github.com/starudream/go-lib/errx"
+	"github.com/starudream/go-lib/log"
 
 	"github.com/starudream/go-lib/internal/gin/render"
 )
@@ -481,7 +482,7 @@ func (c *Context) initFormCache() {
 		req := c.Request
 		if err := req.ParseMultipartForm(c.engine.MaxMultipartMemory); err != nil {
 			if !errors.Is(err, http.ErrNotMultipart) {
-				debugPrint("error on parse multipart form array: %v", err)
+				log.Warn().Msgf("error on parse multipart form array: %v", err)
 			}
 		}
 		c.formCache = req.PostForm
@@ -722,6 +723,15 @@ func (c *Context) Render(code int, r render.Render) {
 	if err := r.Render(c.Writer); err != nil {
 		panic(err)
 	}
+}
+
+// OK serializes the given struct as JSON into the response body.
+// It also sets the Content-Type as "application/json".
+func (c *Context) OK(obj ...any) {
+	if len(obj) == 0 || obj[0] == nil {
+		obj = []any{map[string]any{}}
+	}
+	c.Render(http.StatusOK, render.JSON{Data: obj[0]})
 }
 
 // Error serializes the given errx.Error as JSON into the response body.

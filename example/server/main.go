@@ -26,6 +26,7 @@ func main() {
 	Get("/not")
 	Get("/v1/hello")
 	Get("/v1/admin/verify")
+	Get("/v1/foo")
 	Get("/v2/health")
 }
 
@@ -38,7 +39,6 @@ func Register() {
 	{
 		g1.Handle(http.MethodGet, "/hello", func(c *server.Context) {
 			log.Ctx(c).Info().Msg("world")
-			c.Error(errx.OK)
 		})
 
 		g1a := g1.Group("/admin")
@@ -47,6 +47,10 @@ func Register() {
 				c.Error(errx.ErrUnAuth)
 			})
 		}
+
+		g1.Handle(http.MethodGet, "/:name", func(c *server.Context) {
+			c.OK(map[string]any{"name": c.Param("name")})
+		})
 	}
 
 	g2 := server.Group("/v2")

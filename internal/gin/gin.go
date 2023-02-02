@@ -5,16 +5,16 @@
 package gin
 
 import (
-	"fmt"
 	"net"
 	"net/http"
-	"os"
 	"path"
 	"strings"
 	"sync"
 
 	"golang.org/x/net/http2"
 	"golang.org/x/net/http2/h2c"
+
+	"github.com/starudream/go-lib/log"
 
 	"github.com/starudream/go-lib/internal/gin/internal/bytesconv"
 )
@@ -233,7 +233,7 @@ func (engine *Engine) addRoute(method, path string, handlers HandlersChain) {
 	assert1(method != "", "HTTP method can not be empty")
 	assert1(len(handlers) > 0, "there must be at least one handler")
 
-	debugPrintRoute(method, path, handlers)
+	log.Debug().Msgf("%-6s %-25s --> %s (%d handlers)", method, path, nameOfFunction(handlers.Last()), len(handlers))
 
 	root := engine.trees.get(method)
 	if root == nil {
@@ -277,23 +277,6 @@ func iterate(path, method string, routes RoutesInfo, root *node) RoutesInfo {
 		routes = iterate(path, method, routes, child)
 	}
 	return routes
-}
-
-// Run attaches the router to a http.Server and starts listening and serving HTTP requests.
-// It is a shortcut for http.ListenAndServe(addr, router)
-// Note: this method will block the calling goroutine indefinitely unless an error happens.
-func (engine *Engine) Run(addr ...string) (err error) {
-	defer func() { debugPrintError(err) }()
-
-	if engine.isUnsafeTrustedProxies() {
-		debugPrint("[WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.\n" +
-			"Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.")
-	}
-
-	address := resolveAddress(addr)
-	debugPrint("Listening and serving HTTP on %s\n", address)
-	err = http.ListenAndServe(address, engine.Handler())
-	return
 }
 
 func (engine *Engine) prepareTrustedCIDRs() ([]*net.IPNet, error) {
@@ -399,82 +382,6 @@ func parseIP(ip string) net.IP {
 	return parsedIP
 }
 
-// RunTLS attaches the router to a http.Server and starts listening and serving HTTPS (secure) requests.
-// It is a shortcut for http.ListenAndServeTLS(addr, certFile, keyFile, router)
-// Note: this method will block the calling goroutine indefinitely unless an error happens.
-func (engine *Engine) RunTLS(addr, certFile, keyFile string) (err error) {
-	debugPrint("Listening and serving HTTPS on %s\n", addr)
-	defer func() { debugPrintError(err) }()
-
-	if engine.isUnsafeTrustedProxies() {
-		debugPrint("[WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.\n" +
-			"Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.")
-	}
-
-	err = http.ListenAndServeTLS(addr, certFile, keyFile, engine.Handler())
-	return
-}
-
-// RunUnix attaches the router to a http.Server and starts listening and serving HTTP requests
-// through the specified unix socket (i.e. a file).
-// Note: this method will block the calling goroutine indefinitely unless an error happens.
-func (engine *Engine) RunUnix(file string) (err error) {
-	debugPrint("Listening and serving HTTP on unix:/%s", file)
-	defer func() { debugPrintError(err) }()
-
-	if engine.isUnsafeTrustedProxies() {
-		debugPrint("[WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.\n" +
-			"Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.")
-	}
-
-	listener, err := net.Listen("unix", file)
-	if err != nil {
-		return
-	}
-	defer listener.Close()
-	defer os.Remove(file)
-
-	err = http.Serve(listener, engine.Handler())
-	return
-}
-
-// RunFd attaches the router to a http.Server and starts listening and serving HTTP requests
-// through the specified file descriptor.
-// Note: this method will block the calling goroutine indefinitely unless an error happens.
-func (engine *Engine) RunFd(fd int) (err error) {
-	debugPrint("Listening and serving HTTP on fd@%d", fd)
-	defer func() { debugPrintError(err) }()
-
-	if engine.isUnsafeTrustedProxies() {
-		debugPrint("[WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.\n" +
-			"Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.")
-	}
-
-	f := os.NewFile(uintptr(fd), fmt.Sprintf("fd@%d", fd))
-	listener, err := net.FileListener(f)
-	if err != nil {
-		return
-	}
-	defer listener.Close()
-	err = engine.RunListener(listener)
-	return
-}
-
-// RunListener attaches the router to a http.Server and starts listening and serving HTTP requests
-// through the specified net.Listener
-func (engine *Engine) RunListener(listener net.Listener) (err error) {
-	debugPrint("Listening and serving HTTP on listener what's bind with address@%s", listener.Addr())
-	defer func() { debugPrintError(err) }()
-
-	if engine.isUnsafeTrustedProxies() {
-		debugPrint("[WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.\n" +
-			"Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.")
-	}
-
-	err = http.Serve(listener, engine.Handler())
-	return
-}
-
 // ServeHTTP conforms to the http.Handler interface.
 func (engine *Engine) ServeHTTP(w http.ResponseWriter, req *http.Request) {
 	c := engine.pool.Get().(*Context)
@@ -570,7 +477,7 @@ func serveError(c *Context, code int, defaultMessage []byte) {
 		c.writermem.Header()["Content-Type"] = mimePlain
 		_, err := c.Writer.Write(defaultMessage)
 		if err != nil {
-			debugPrint("cannot write message to writer during serve error: %v", err)
+			log.Warn().Msgf("cannot write message to writer during serve error: %v", err)
 		}
 		return
 	}
@@ -611,7 +518,7 @@ func redirectRequest(c *Context) {
 	if req.Method != http.MethodGet {
 		code = http.StatusTemporaryRedirect
 	}
-	debugPrint("redirecting request %d: %s --> %s", code, rPath, rURL)
+	log.Debug().Msgf("redirecting request %d: %s --> %s", code, rPath, rURL)
 	http.Redirect(c.Writer, req, rURL, code)
 	c.writermem.WriteHeaderNow()
 }

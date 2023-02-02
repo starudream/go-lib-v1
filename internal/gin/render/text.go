@@ -17,7 +17,7 @@ type String struct {
 	Data   []any
 }
 
-var plainContentType = []string{"text/plain; charset=utf-8"}
+var plainContentType = []string{"text/plain"}
 
 // Render (String) writes data with custom ContentType.
 func (r String) Render(w http.ResponseWriter) error {
