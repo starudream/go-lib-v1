@@ -76,3 +76,7 @@ func SetLogger(l zerolog.Logger) {
 	log.Logger = _l
 	zerolog.DefaultContextLogger = &_l
 }
+
+func DebugEnable() bool {
+	return _l.GetLevel() <= zerolog.DebugLevel
+}
