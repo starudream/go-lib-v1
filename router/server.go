@@ -1,10 +1,10 @@
-package server
+package router
 
 import (
 	"net/http"
 
 	"github.com/starudream/go-lib/errx"
-	"github.com/starudream/go-lib/server/middleware"
+	"github.com/starudream/go-lib/router/middleware"
 
 	"github.com/starudream/go-lib/internal/gin"
 )

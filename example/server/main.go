@@ -12,7 +12,7 @@ import (
 	"github.com/starudream/go-lib/constant"
 	"github.com/starudream/go-lib/errx"
 	"github.com/starudream/go-lib/log"
-	"github.com/starudream/go-lib/server"
+	"github.com/starudream/go-lib/router"
 )
 
 const addr = ":80"
@@ -32,42 +32,42 @@ func main() {
 }
 
 func Register() {
-	server.Handle(http.MethodGet, "/", func(c *server.Context) {
+	router.Handle(http.MethodGet, "/", func(c *router.Context) {
 		c.JSON(http.StatusOK, map[string]any{"version": constant.VERSION})
 	})
 
-	g1 := server.Group("/v1")
+	g1 := router.Group("/v1")
 	{
-		g1.Handle(http.MethodGet, "/hello", func(c *server.Context) {
+		g1.Handle(http.MethodGet, "/hello", func(c *router.Context) {
 			log.Ctx(c).Info().Msg("world")
 		})
 
 		g1a := g1.Group("/admin")
 		{
-			g1a.Handle(http.MethodGet, "/verify", func(c *server.Context) {
+			g1a.Handle(http.MethodGet, "/verify", func(c *router.Context) {
 				c.Error(errx.ErrUnAuth)
 			})
 		}
 
-		g1.Handle(http.MethodGet, "/:name", func(c *server.Context) {
+		g1.Handle(http.MethodGet, "/:name", func(c *router.Context) {
 			c.OK(map[string]any{"name": c.Param("name")})
 		})
 	}
 
-	g2 := server.Group("/v2")
+	g2 := router.Group("/v2")
 	{
-		g2.Handle(http.MethodGet, "/health", func(c *server.Context) {
+		g2.Handle(http.MethodGet, "/health", func(c *router.Context) {
 			c.String(http.StatusOK, c.FullPath())
 		})
 
-		g2.Handle(http.MethodGet, "/panic", func(c *server.Context) {
+		g2.Handle(http.MethodGet, "/panic", func(c *router.Context) {
 			panic("test")
 		})
 	}
 }
 
 func Server(timeout time.Duration) {
-	s := &http.Server{Addr: addr, Handler: server.Handler()}
+	s := &http.Server{Addr: addr, Handler: router.Handler()}
 
 	ln, err := net.Listen("tcp", addr)
 	if err != nil {
