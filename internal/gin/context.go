@@ -576,7 +576,7 @@ func (c *Context) BindJSON(obj any) error {
 	if err != nil {
 		BindErrorHandler(c, err)
 	}
-	return nil
+	return err
 }
 
 // ClientIP implements one best effort algorithm to return the real client IP.
