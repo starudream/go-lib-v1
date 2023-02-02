@@ -2,6 +2,7 @@ package middleware
 
 import (
 	"bytes"
+	"net/http"
 	"time"
 
 	"github.com/starudream/go-lib/codec/json"
@@ -54,7 +55,12 @@ func Logger(c *Context) {
 		resp = rawDataIgnore
 	}
 
-	l.Info().
+	lvl := log.InfoLevel
+	if statusCode != http.StatusOK {
+		lvl = log.ErrorLevel
+	}
+
+	l.WithLevel(lvl).
 		Int("code", statusCode).
 		Str("type", c.Writer.Header().Get(contentType)).
 		Dur("took", time.Since(start)).

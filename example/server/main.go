@@ -28,6 +28,7 @@ func main() {
 	Get("/v1/admin/verify")
 	Get("/v1/foo")
 	Get("/v2/health")
+	Get("/v2/panic")
 }
 
 func Register() {
@@ -56,7 +57,11 @@ func Register() {
 	g2 := server.Group("/v2")
 	{
 		g2.Handle(http.MethodGet, "/health", func(c *server.Context) {
-			c.String(http.StatusOK, "ok")
+			c.String(http.StatusOK, c.FullPath())
+		})
+
+		g2.Handle(http.MethodGet, "/panic", func(c *server.Context) {
+			panic("test")
 		})
 	}
 }

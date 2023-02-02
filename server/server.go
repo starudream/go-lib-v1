@@ -20,15 +20,14 @@ var _e *gin.Engine
 func init() {
 	_e = gin.New()
 
-	_e.UseH2C = true
 	_e.ContextWithFallback = true
 
 	_e.Use(
 		middleware.RealIP,
 		middleware.RequestId,
-		middleware.Recover,
 		middleware.CORS,
 		middleware.Logger,
+		middleware.Recover,
 	)
 
 	_e.NoRoute(func(c *Context) { c.Error(errx.ErrNotFound) })
