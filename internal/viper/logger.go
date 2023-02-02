@@ -8,30 +8,30 @@ type Logger interface {
 	//
 	// Even more fine-grained information than Debug events.
 	// Loggers not supporting this level should fall back to Debug.
-	Trace(msg string, kvs ...interface{})
+	Trace(msg string, keyvals ...interface{})
 
 	// Debug logs a Debug event.
 	//
 	// A verbose series of information events.
 	// They are useful when debugging the system.
-	Debug(msg string, kvs ...interface{})
+	Debug(msg string, keyvals ...interface{})
 
 	// Info logs an Info event.
 	//
 	// General information about what's happening inside the system.
-	Info(msg string, kvs ...interface{})
+	Info(msg string, keyvals ...interface{})
 
 	// Warn logs a Warn(ing) event.
 	//
 	// Non-critical events that should be looked at.
-	Warn(msg string, kvs ...interface{})
+	Warn(msg string, keyvals ...interface{})
 
 	// Error logs an Error event.
 	//
 	// Critical events that require immediate attention.
 	// Loggers commonly provide Fatal and Panic levels above Error level,
 	// but exiting and panic is out of scope for a logging library.
-	Error(msg string, kvs ...interface{})
+	Error(msg string, keyvals ...interface{})
 }
 
 type discardLogger struct{}

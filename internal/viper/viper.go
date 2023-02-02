@@ -196,7 +196,7 @@ func New() *Viper {
 	v.env = make(map[string][]string)
 	v.aliases = make(map[string]string)
 	v.typeByDefValue = false
-	v.logger = &discardLogger{}
+	v.logger = discardLogger{}
 
 	v.resetEncoding()
 
@@ -218,7 +218,7 @@ func (fn optionFunc) apply(v *Viper) {
 }
 
 // KeyDelimiter sets the delimiter used for determining key parts.
-// By default, it's value is ".".
+// By default it's value is ".".
 func KeyDelimiter(d string) Option {
 	return optionFunc(func(v *Viper) {
 		v.keyDelim = d
@@ -302,13 +302,18 @@ func (v *Viper) resetEncoding() {
 // SupportedExts are universally supported extensions.
 var SupportedExts = []string{"json", "toml", "yaml", "yml"}
 
+// OnConfigChange sets the event handler that is called when a config file changes.
 func OnConfigChange(run func(in fsnotify.Event)) { v.OnConfigChange(run) }
+
+// OnConfigChange sets the event handler that is called when a config file changes.
 func (v *Viper) OnConfigChange(run func(in fsnotify.Event)) {
 	v.onConfigChange = run
 }
 
+// WatchConfig starts watching a config file for changes.
 func WatchConfig() { v.WatchConfig() }
 
+// WatchConfig starts watching a config file for changes.
 func (v *Viper) WatchConfig() {
 	initWG := sync.WaitGroup{}
 	initWG.Add(1)
@@ -527,7 +532,7 @@ func (v *Viper) searchSliceWithPathPrefixes(
 	pathIndex int,
 	path []string,
 ) interface{} {
-	// if the prefixKey is not a number, or it is out of bounds of the slice
+	// if the prefixKey is not a number or it is out of bounds of the slice
 	index, err := strconv.Atoi(prefixKey)
 	if err != nil || len(sourceSlice) <= index {
 		return nil
@@ -736,7 +741,7 @@ func (v *Viper) Get(key string) interface{} {
 	return val
 }
 
-// Sub returns new Viper instance representing a subtree of this instance.
+// Sub returns new Viper instance representing a sub tree of this instance.
 // Sub is case-insensitive for a key.
 func Sub(key string) *Viper { return v.Sub(key) }
 
@@ -988,7 +993,7 @@ func (v *Viper) BindFlagValue(key string, flag FlagValue) error {
 }
 
 // BindEnv binds a Viper key to a ENV variable.
-// ENV variables are case-sensitive.
+// ENV variables are case sensitive.
 // If only a key is provided, it will use the env key matching the key, uppercased.
 // If more arguments are provided, they will represent the env variable names that
 // should bind to this key and will be taken in the specified order.
