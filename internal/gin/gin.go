@@ -11,9 +11,6 @@ import (
 	"strings"
 	"sync"
 
-	"golang.org/x/net/http2"
-	"golang.org/x/net/http2/h2c"
-
 	"github.com/starudream/go-lib/log"
 
 	"github.com/starudream/go-lib/internal/gin/internal/bytesconv"
@@ -127,9 +124,6 @@ type Engine struct {
 	// method call.
 	MaxMultipartMemory int64
 
-	// UseH2C enable h2c support.
-	UseH2C bool
-
 	// ContextWithFallback enable fallback Context.Deadline(), Context.Done(), Context.Err() and Context.Value() when Context.Request.Context() is not nil.
 	ContextWithFallback bool
 
@@ -184,12 +178,7 @@ func New() *Engine {
 }
 
 func (engine *Engine) Handler() http.Handler {
-	if !engine.UseH2C {
-		return engine
-	}
-
-	h2s := &http2.Server{}
-	return h2c.NewHandler(engine, h2s)
+	return engine
 }
 
 func (engine *Engine) allocateContext(maxParams uint16) *Context {
