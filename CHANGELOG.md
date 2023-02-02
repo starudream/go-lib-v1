@@ -1,5 +1,30 @@
 # Changelog
 
+## [1.9.0](https://github.com/starudream/go-lib/compare/v1.8.0...v1.9.0) (2023-02-02)
+
+
+### Features
+
+* **errx:** add error struct ([5359e41](https://github.com/starudream/go-lib/commit/5359e417ffb8972b29e9a7b56706cc5cef57e8bb))
+* **internal:** add gin ([750103f](https://github.com/starudream/go-lib/commit/750103f66817b592f6a6eaefa0e59c06959b6ca4))
+* **internal:** viper ([7c0c50f](https://github.com/starudream/go-lib/commit/7c0c50fd0b2799ffec0aaa7a2abb58aa1c5e2f1a))
+* **server:** add server ([09c41f9](https://github.com/starudream/go-lib/commit/09c41f9717da9a0724394fe3c7047b53a5970d95))
+* **server:** add test helper ([b7cd321](https://github.com/starudream/go-lib/commit/b7cd3216c4f9da148da375f4bf132ad6c916aa9a))
+
+
+### Bug Fixes
+
+* **router:** remove chi ([0f5f6b0](https://github.com/starudream/go-lib/commit/0f5f6b048afacf5e3e17ebfb6f04380af7c97ac4))
+
+
+### Performance Improvements
+
+* **internal:** no h2c ([f7dd5be](https://github.com/starudream/go-lib/commit/f7dd5be5c8e19a55c966b856fb58b1b290854c01))
+* **internal:** perfect ([0a169f6](https://github.com/starudream/go-lib/commit/0a169f68afc0335fb23e9ee1b0a4714171883e7a))
+* **log:** add level ([8faf5ce](https://github.com/starudream/go-lib/commit/8faf5ce7f366bf4a0d9caf39bc608106bd32c36c))
+* **log:** perfect debug enable ([65455ba](https://github.com/starudream/go-lib/commit/65455ba46c9508d4b66ac4b454f5252ea30fd00f))
+* **server:** perfect logger ([776b5db](https://github.com/starudream/go-lib/commit/776b5db363becfd4ead1d65ede2d38fa3cf398f2))
+
 ## [1.8.0](https://github.com/starudream/go-lib/compare/v1.7.2...v1.8.0) (2023-01-31)
 
 
