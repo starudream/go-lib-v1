@@ -42,4 +42,4 @@ tidy:
 .PHONY: lint
 lint:
 	@$(MAKE) tidy
-	golangci-lint run --skip-dirs internal
+	golangci-lint run --skip-dirs internal/viper

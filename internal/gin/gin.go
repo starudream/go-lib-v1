@@ -310,11 +310,6 @@ func (engine *Engine) SetTrustedProxies(trustedProxies []string) error {
 	return engine.parseTrustedProxies()
 }
 
-// isUnsafeTrustedProxies checks if Engine.trustedCIDRs contains all IPs, it's not safe if it has (returns true)
-func (engine *Engine) isUnsafeTrustedProxies() bool {
-	return engine.isTrustedProxy(net.ParseIP("0.0.0.0")) || engine.isTrustedProxy(net.ParseIP("::"))
-}
-
 // parseTrustedProxies parse Engine.trustedProxies to Engine.trustedCIDRs
 func (engine *Engine) parseTrustedProxies() error {
 	trustedCIDRs, err := engine.prepareTrustedCIDRs()
