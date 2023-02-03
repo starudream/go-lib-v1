@@ -11,6 +11,7 @@ import (
 	"github.com/starudream/go-lib/log"
 	"github.com/starudream/go-lib/randx"
 	"github.com/starudream/go-lib/seq"
+	"github.com/starudream/go-lib/timex"
 )
 
 func main() {
@@ -22,6 +23,7 @@ func main() {
 	app.Add(wrapError(TestHTTPX))
 	app.Add(wrapError(TestRandX))
 	app.Add(wrapError(TestSeq))
+	app.Add(wrapError(TestTimeX))
 	app.Defer(TestDefer)
 	err := app.OnceGo()
 	if err != nil {
@@ -80,6 +82,10 @@ func TestSeq() {
 	log.Info().Msgf("sonyflake: %s", seq.NextId())
 	log.Info().Msgf("uuid: %s", seq.UUID())
 	log.Info().Msgf("uuid short: %s", seq.UUIDShort())
+}
+
+func TestTimeX() {
+	log.Info().Msgf("begin of day: %s", timex.BeginOfDay().Format(timex.DateTimeFormat))
 }
 
 func TestDefer() {
