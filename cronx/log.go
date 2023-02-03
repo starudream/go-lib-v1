@@ -4,11 +4,12 @@ import (
 	"fmt"
 
 	"github.com/robfig/cron/v3"
-	"github.com/rs/zerolog"
+
+	"github.com/starudream/go-lib/log"
 )
 
 type logger struct {
-	Logger zerolog.Logger
+	Logger log.L
 }
 
 var _ cron.Logger = (*logger)(nil)

@@ -2,11 +2,12 @@ package httpx
 
 import (
 	"github.com/go-resty/resty/v2"
-	"github.com/rs/zerolog"
+
+	"github.com/starudream/go-lib/log"
 )
 
 type logger struct {
-	Logger zerolog.Logger
+	Logger log.L
 }
 
 var _ resty.Logger = (*logger)(nil)
