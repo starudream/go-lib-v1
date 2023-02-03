@@ -1,5 +1,14 @@
 # Changelog
 
+## [1.10.2](https://github.com/starudream/go-lib/compare/v1.10.1...v1.10.2) (2023-02-03)
+
+
+### Performance Improvements
+
+* **cache:** perfect cache error ([b593723](https://github.com/starudream/go-lib/commit/b5937233262119676563c4ec049e0c76fc80e099))
+* **log:** prefect import ([e6c6e6b](https://github.com/starudream/go-lib/commit/e6c6e6bc9b0b4475726667ebf8c28653c1bb06ab))
+* **time:** perfect example ([02ccf35](https://github.com/starudream/go-lib/commit/02ccf3506e171c774afdcc239ec1345e9fb04bdd))
+
 ## [1.10.1](https://github.com/starudream/go-lib/compare/v1.10.0...v1.10.1) (2023-02-02)
 
 
