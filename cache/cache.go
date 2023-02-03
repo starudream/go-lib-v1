@@ -1,6 +1,7 @@
 package cache
 
 import (
+	"errors"
 	"time"
 
 	"github.com/bluele/gcache"
@@ -54,4 +55,11 @@ func LFU() gcache.Cache {
 // ARC constantly balances between LRU and LFU, to improve the combined result.
 func ARC() gcache.Cache {
 	return New(size, TypeARC, expire)
+}
+
+func IsErrKeyNotFound(err error) bool {
+	if err == nil {
+		return false
+	}
+	return errors.Is(err, gcache.KeyNotFoundError)
 }

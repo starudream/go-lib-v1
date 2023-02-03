@@ -5,6 +5,7 @@ import (
 	"time"
 
 	"github.com/starudream/go-lib/app"
+	"github.com/starudream/go-lib/cache"
 	"github.com/starudream/go-lib/config"
 	"github.com/starudream/go-lib/httpx"
 	"github.com/starudream/go-lib/log"
@@ -16,6 +17,7 @@ func main() {
 	log.Attach("app", "example-simple")
 	app.Init(func() error { log.Info().Msg("init"); return nil })
 	app.Add(wrapError(TestAppTime))
+	app.Add(wrapError(TestCache))
 	app.Add(wrapError(TestConfig))
 	app.Add(wrapError(TestHTTPX))
 	app.Add(wrapError(TestRandX))
@@ -36,6 +38,24 @@ func TestAppTime() {
 	log.Info().Msgf("startup: %v", app.StartupTime().Format(time.RFC3339Nano))
 	log.Info().Msgf("running: %v", app.RunningTime().Format(time.RFC3339Nano))
 	log.Info().Msgf("cost: %v", app.CostTime())
+}
+
+func TestCache() {
+	c := cache.SIMPLE()
+	err := c.Set("foo", true)
+	if err != nil {
+		log.Fatal().Msgf("set foo error: %v", err)
+	}
+	v1, err := c.Get("foo")
+	if err != nil {
+		log.Fatal().Msgf("get foo error: %v", err)
+	}
+	log.Info().Msgf("foo: %v", v1)
+	v2, err := c.Get("bar")
+	if err != nil && !cache.IsErrKeyNotFound(err) {
+		log.Fatal().Msgf("get bar error: %v", err)
+	}
+	log.Info().Msgf("bar: %v", v2)
 }
 
 func TestConfig() {
