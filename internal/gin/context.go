@@ -89,8 +89,8 @@ func (c *Context) reset() {
 // This has to be used when the context has to be passed to a goroutine.
 func (c *Context) Copy() *Context {
 	cp := Context{
-		writer:  c.writer,
 		Request: c.Request,
+		writer:  c.writer,
 		Params:  c.Params,
 		engine:  c.engine,
 	}
