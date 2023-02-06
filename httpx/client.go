@@ -5,13 +5,13 @@ import (
 	"time"
 
 	"github.com/go-resty/resty/v2"
+	"golang.org/x/net/http/httpproxy"
 
 	"github.com/starudream/go-lib/codec/json"
 	"github.com/starudream/go-lib/codec/xml"
 	"github.com/starudream/go-lib/config"
 	"github.com/starudream/go-lib/log"
 
-	"github.com/starudream/go-lib/internal/httpproxy"
 	"github.com/starudream/go-lib/internal/ilog"
 )
 
