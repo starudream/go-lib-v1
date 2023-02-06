@@ -22,7 +22,3 @@ func InitingTime() time.Time {
 func RunningTime() time.Time {
 	return running
 }
-
-func CostTime() time.Duration {
-	return running.Sub(startup)
-}

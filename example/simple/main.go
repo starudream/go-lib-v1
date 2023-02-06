@@ -39,7 +39,6 @@ func wrapError(f func()) func(ctx context.Context) error {
 func TestAppTime() {
 	log.Info().Msgf("startup: %v", app.StartupTime().Format(time.RFC3339Nano))
 	log.Info().Msgf("running: %v", app.RunningTime().Format(time.RFC3339Nano))
-	log.Info().Msgf("cost: %v", app.CostTime())
 }
 
 func TestCache() {
