@@ -7,6 +7,9 @@ import (
 var (
 	json = jsoniter.ConfigCompatibleWithStandardLibrary
 
+	Prefix = ""
+	Indent = "  "
+
 	Marshal   = json.Marshal
 	Unmarshal = json.Unmarshal
 
@@ -29,7 +32,7 @@ func MustMarshalString(v any) string {
 }
 
 func MustMarshalIndent(v any) []byte {
-	bs, err := MarshalIndent(v, "", "  ")
+	bs, err := MarshalIndent(v, Prefix, Indent)
 	if err != nil {
 		panic(err)
 	}

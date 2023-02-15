@@ -5,6 +5,9 @@ import (
 )
 
 var (
+	Prefix = ""
+	Indent = "  "
+
 	Marshal   = xml.Marshal
 	Unmarshal = xml.Unmarshal
 
@@ -27,7 +30,7 @@ func MustMarshalString(v any) string {
 }
 
 func MustMarshalIndent(v any) []byte {
-	bs, err := MarshalIndent(v, "", "  ")
+	bs, err := MarshalIndent(v, Prefix, Indent)
 	if err != nil {
 		panic(err)
 	}
