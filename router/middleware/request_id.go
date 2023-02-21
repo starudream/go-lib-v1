@@ -6,12 +6,14 @@ import (
 )
 
 func RequestId(c *Context) {
-	rid := c.GetHeader(xRequestID)
+	rid := c.GetHeader("X-Request-ID")
 	if rid == "" {
 		rid = seq.UUID()
-		c.Request.Header.Set(xRequestID, rid)
+		c.Request.Header.Set("X-Request-ID", rid)
 	}
-	c.Header(xRequestID, rid)
+
+	c.Header("X-Request-ID", rid)
+
 	c.Request = c.Request.WithContext(log.With().Str("rid", rid).Logger().WithContext(c))
 
 	c.Next()

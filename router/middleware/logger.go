@@ -38,7 +38,7 @@ func Logger(c *Context) {
 	}
 
 	l.Info().
-		Str("type", filterFlags(c.Request.Header.Get(contentType))).
+		Str("type", filterFlags(c.GetHeader("Content-Type"))).
 		Msgf("req=%s", req)
 
 	c.Next()
@@ -60,7 +60,7 @@ func Logger(c *Context) {
 
 	l.WithLevel(lvl).
 		Int("code", statusCode).
-		Str("type", filterFlags(c.Writer.Header().Get(contentType))).
+		Str("type", filterFlags(c.Writer.Header().Get("Content-Type"))).
 		Dur("took", time.Since(start)).
 		Msgf("resp=%s", resp)
 }

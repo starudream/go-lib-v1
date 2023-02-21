@@ -16,19 +16,21 @@ func RealIP(c *Context) {
 func realIP(r *http.Request) string {
 	var ip string
 
-	if tcip := r.Header.Get(trueClientIP); tcip != "" {
+	if tcip := r.Header.Get("True-Client-IP"); tcip != "" {
 		ip = tcip
-	} else if xrip := r.Header.Get(xRealIP); xrip != "" {
+	} else if xrip := r.Header.Get("X-Real-IP"); xrip != "" {
 		ip = xrip
-	} else if xff := r.Header.Get(xForwardedFor); xff != "" {
+	} else if xff := r.Header.Get("X-Forwarded-For"); xff != "" {
 		i := strings.Index(xff, ",")
 		if i == -1 {
 			i = len(xff)
 		}
 		ip = xff[:i]
 	}
+
 	if ip == "" || net.ParseIP(ip) == nil {
 		return ""
 	}
+
 	return ip
 }
