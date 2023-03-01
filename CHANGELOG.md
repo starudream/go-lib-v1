@@ -1,5 +1,31 @@
 # Changelog
 
+## [1.11.0](https://github.com/starudream/go-lib/compare/v1.10.2...v1.11.0) (2023-03-01)
+
+
+### Features
+
+* **bot:** add telegram ([f43af0b](https://github.com/starudream/go-lib/commit/f43af0b74a60b77eb700f9564586ac8f69e67815))
+* **jwt:** add jwt auth ([9cd3c7e](https://github.com/starudream/go-lib/commit/9cd3c7ec517858deda41ec3458a56ec365844fb7))
+
+
+### Bug Fixes
+
+* **app:** remove cost time ([0fc4c9f](https://github.com/starudream/go-lib/commit/0fc4c9fce05a9ddab05158b4bd5c7eb364372fb2))
+
+
+### Performance Improvements
+
+* **codec:** perfect ([2e8ccdf](https://github.com/starudream/go-lib/commit/2e8ccdf1c0a4288415518b7c22c7ed82317cb839))
+* **internal:** errgroup ([55ae718](https://github.com/starudream/go-lib/commit/55ae7185898b19a8430bef3e8af617594fd02641))
+* **internal:** gin ([31554a4](https://github.com/starudream/go-lib/commit/31554a487e3a0f9f09794efcfb4755cb7b6d679d))
+* **internal:** httpproxy ([512eb45](https://github.com/starudream/go-lib/commit/512eb45d3621fb413edad54fb87f4a4aee67129d))
+* **internal:** sonyflake ([210788a](https://github.com/starudream/go-lib/commit/210788ae4b543bc9fb755794cbcc0006cb0c0309))
+* **internal:** viper ([5092982](https://github.com/starudream/go-lib/commit/50929826fd5041954183d861ae18ebe7654a97f8))
+* **router:** perfect headers ([6dc8b16](https://github.com/starudream/go-lib/commit/6dc8b1623ece919f3bb4416f03348957406b3fc5))
+* **testx:** add printer ([9cb7a9d](https://github.com/starudream/go-lib/commit/9cb7a9d8dd42a026186a9bec751156e6a253a709))
+* **timex:** add location ([7c0ac48](https://github.com/starudream/go-lib/commit/7c0ac4851dc5a171ac59ad049f6013bc6da999cd))
+
 ## [1.10.2](https://github.com/starudream/go-lib/compare/v1.10.1...v1.10.2) (2023-02-03)
 
 
