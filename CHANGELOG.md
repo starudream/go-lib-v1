@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.11.1](https://github.com/starudream/go-lib/compare/v1.11.0...v1.11.1) (2023-03-01)
+
+
+### Bug Fixes
+
+* **bot:** fix nil panic ([abb2b29](https://github.com/starudream/go-lib/commit/abb2b298cb1461cab1e70ab8f42fcccdeda315a4))
+
 ## [1.11.0](https://github.com/starudream/go-lib/compare/v1.10.2...v1.11.0) (2023-03-01)
 
 
