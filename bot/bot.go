@@ -43,9 +43,15 @@ func Bot() Interface {
 }
 
 func Send(text string) error {
+	if _b == nil {
+		return nil
+	}
 	return _b.Send(text)
 }
 
 func SendRaw(raw any) error {
+	if _b == nil {
+		return nil
+	}
 	return _b.SendRaw(raw)
 }
