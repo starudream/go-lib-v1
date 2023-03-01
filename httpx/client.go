@@ -2,6 +2,7 @@ package httpx
 
 import (
 	"net/http"
+	"runtime"
 	"time"
 
 	"github.com/go-resty/resty/v2"
@@ -22,6 +23,11 @@ type (
 
 var _c *resty.Client
 
+var (
+	hdrUserAgentKey   = http.CanonicalHeaderKey("User-Agent")
+	hdrUserAgentValue = runtime.Version()
+)
+
 func init() {
 	_c = resty.New()
 	_c.JSONMarshal = json.Marshal
@@ -38,6 +44,8 @@ func init() {
 	if pc != nil && (pc.HTTPProxy != "" || pc.HTTPSProxy != "") {
 		ilog.X.Debug().Msgf("proxy: %s", json.MustMarshalString(pc))
 	}
+
+	_c.SetHeader(hdrUserAgentKey, hdrUserAgentValue)
 }
 
 func Client() *resty.Client {
@@ -47,8 +55,6 @@ func Client() *resty.Client {
 func SetTimeout(timeout time.Duration) {
 	_c.SetTimeout(timeout)
 }
-
-var hdrUserAgentKey = http.CanonicalHeaderKey("User-Agent")
 
 func SetUserAgent(ua string) {
 	_c.SetHeader(hdrUserAgentKey, ua)

@@ -23,6 +23,15 @@ func init() {
 			ilog.X.Debug().Msgf("registry default bot as dingtalk")
 		}
 	}
+
+	// telegram
+	{
+		token, chatId := config.GetString("telegram.token"), config.GetString("telegram.chat_id")
+		if token != "" && chatId != "" {
+			_b = NewTelegram(token, chatId)
+			ilog.X.Debug().Msgf("registry default bot as telegram")
+		}
+	}
 }
 
 func Init(b Interface) {
