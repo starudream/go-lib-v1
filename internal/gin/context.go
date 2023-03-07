@@ -14,6 +14,7 @@ import (
 	"net/http"
 	"net/url"
 	"os"
+	"path/filepath"
 	"strings"
 	"sync"
 	"time"
@@ -199,20 +200,20 @@ func (c *Context) AbortWithStatusJSON(code int, jsonObj any) {
 // It also lazy initializes  c.Keys if it was not used previously.
 func (c *Context) Set(key string, value any) {
 	c.mu.Lock()
+	defer c.mu.Unlock()
 	if c.Keys == nil {
 		c.Keys = make(map[string]any)
 	}
 
 	c.Keys[key] = value
-	c.mu.Unlock()
 }
 
 // Get returns the value for the given key, ie: (value, true).
 // If the value does not exist it returns (nil, false)
 func (c *Context) Get(key string) (value any, exists bool) {
 	c.mu.RLock()
+	defer c.mu.RUnlock()
 	value, exists = c.Keys[key]
-	c.mu.RUnlock()
 	return
 }
 
@@ -337,7 +338,9 @@ func (c *Context) GetStringMapStringSlice(key string) (smss map[string][]string)
 //
 //	router.GET("/user/:id", func(c *gin.Context) {
 //	    // a GET request to /user/john
-//	    id := c.Param("id") // id == "john"
+//	    id := c.Param("id") // id == "/john"
+//	    // a GET request to /user/john/
+//	    id := c.Param("id") // id == "/john/"
 //	})
 func (c *Context) Param(key string) string {
 	return c.Params.ByName(key)
@@ -508,7 +511,7 @@ func (c *Context) GetPostFormMap(key string) (map[string]string, bool) {
 	return c.get(c.formCache, key)
 }
 
-// get is an internal method and returns a map which satisfy conditions.
+// get is an internal method and returns a map which satisfies conditions.
 func (c *Context) get(m map[string][]string, key string) (map[string]string, bool) {
 	dicts := make(map[string]string)
 	exist := false
@@ -552,6 +555,10 @@ func (c *Context) SaveUploadedFile(file *multipart.FileHeader, dst string) error
 	}
 	defer src.Close()
 
+	if err = os.MkdirAll(filepath.Dir(dst), 0750); err != nil {
+		return err
+	}
+
 	out, err := os.Create(dst)
 	if err != nil {
 		return err
@@ -580,7 +587,7 @@ func (c *Context) BindJSON(obj any) error {
 }
 
 // ClientIP implements one best effort algorithm to return the real client IP.
-// It called c.RemoteIP() under the hood, to check if the remote IP is a trusted proxy or not.
+// It calls c.RemoteIP() under the hood, to check if the remote IP is a trusted proxy or not.
 // If it is it will then try to parse the headers defined in Engine.RemoteIPHeaders (defaulting to [X-Forwarded-For, X-Real-Ip]).
 // If the headers are not syntactically valid OR the remote IP does not correspond to a trusted proxy,
 // the remote IP (coming from Request.RemoteAddr) is returned.
@@ -736,7 +743,7 @@ func (c *Context) Render(code int, r render.Render) {
 	}
 
 	if err := r.Render(c.Writer); err != nil {
-		panic(err)
+		c.AbortWithError(errx.ErrInternal)
 	}
 }
 
