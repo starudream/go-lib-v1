@@ -4,7 +4,7 @@ go 1.18
 
 require (
 	github.com/bluele/gcache v0.0.2
-	github.com/brianvoe/gofakeit/v6 v6.20.1
+	github.com/brianvoe/gofakeit/v6 v6.20.2
 	github.com/davecgh/go-spew v1.1.1
 	github.com/fsnotify/fsnotify v1.6.0
 	github.com/go-playground/locales v0.14.1
