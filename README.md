@@ -19,3 +19,5 @@ go get -u github.com/starudream/go-lib
 ## License
 
 [Apache License 2.0](./LICENSE)
+
+![FOSSA Status](https://app.fossa.com/api/projects/git%2Bgithub.com%2Fstarudream%2Fgo-lib.svg?type=large)
