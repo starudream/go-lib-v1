@@ -1,23 +1,34 @@
 package main
 
 import (
-	"context"
-	"fmt"
-
-	"github.com/starudream/go-lib/app"
+	"github.com/starudream/go-lib/flag"
 	"github.com/starudream/go-lib/log"
 )
 
-func main() {
-	app.Add(wrap(fmt.Errorf("x")))
-	err := app.OnceGo()
+var rootCmd = &flag.Command{
+	Use:   "root [sub]",
+	Short: "My root command",
+	Run: func(cmd *flag.Command, args []string) {
+		log.Info().Msgf("inside rootCmd Run with args: %v\n", args)
+	},
+}
+
+var subCmd = &flag.Command{
+	Use:   "sub [no options!]",
+	Short: "My subcommand",
+	Run: func(cmd *flag.Command, args []string) {
+		log.Info().Msgf("inside subCmd Run with args: %v\n", args)
+	},
+}
+
+func init() {
+	rootCmd.AddCommand(subCmd)
+	err := rootCmd.Execute()
 	if err != nil {
-		log.Fatal().Msgf("app init fail: %v", err)
+		log.Fatal().Msgf("rootCmd init fail: %v", err)
 	}
 }
 
-func wrap(err error) func(ctx context.Context) error {
-	return func(ctx context.Context) error {
-		return err
-	}
+func main() {
+	log.Info().Msgf("hello world")
 }

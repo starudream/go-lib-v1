@@ -20,20 +20,10 @@ bin-%:
 	@$(MAKE) tidy
 	CGO_ENABLED=1 $(GO) build -race -tags '$(BITTAGS)' -ldflags '$(LDFLAGS)' -o bin/example-$* $(MODULE)/example/$*
 
-.PHONY: example-simple
-example-simple:
+.PHONY: example-%
+run-%:
 	@$(MAKE) tidy
-	CGO_ENABLED=1 $(GO) run -race -tags '$(BITTAGS)' -ldflags '$(LDFLAGS)' $(MODULE)/example/simple
-
-.PHONY: example-bot
-example-bot:
-	@$(MAKE) tidy
-	CGO_ENABLED=1 $(GO) run -race -tags '$(BITTAGS)' -ldflags '$(LDFLAGS)' $(MODULE)/example/bot
-
-.PHONY: example-server
-example-server:
-	@$(MAKE) tidy
-	CGO_ENABLED=1 $(GO) run -race -tags '$(BITTAGS)' -ldflags '$(LDFLAGS)' $(MODULE)/example/server
+	CGO_ENABLED=1 $(GO) run -race -tags '$(BITTAGS)' -ldflags '$(LDFLAGS)' $(MODULE)/example/$*
 
 .PHONY: tidy
 tidy:
