@@ -30,16 +30,9 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.cache/go-build
-            ~/go/pkg/mod
-          key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
       - name: Go
         uses: actions/setup-go@v4
         with:
           go-version: ${{ matrix.go }}
       - name: Build
-        run: make
+        run: make bin
