@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.12.0](https://github.com/starudream/go-lib/compare/v1.11.1...v1.12.0) (2023-03-22)
+
+
+### Features
+
+* **flag:** add flag ([ad5d491](https://github.com/starudream/go-lib/commit/ad5d491bf9fd48a8eb24671821fc361304dcf0af))
+* **internal:** cobra ([aa76950](https://github.com/starudream/go-lib/commit/aa7695055c1dcafc9800fdb3550b45032e6e0838))
+
+
+### Bug Fixes
+
+* **ci:** fix cache ([579a608](https://github.com/starudream/go-lib/commit/579a608e1ae5945e019b58f7ff9257224323adc5))
+* **seq:** fix sonyflake ([c3856ee](https://github.com/starudream/go-lib/commit/c3856ee52f04fefac167632bd316fb00a504dd89))
+
 ## [1.11.1](https://github.com/starudream/go-lib/compare/v1.11.0...v1.11.1) (2023-03-01)
 
 
