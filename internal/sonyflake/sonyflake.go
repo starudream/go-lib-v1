@@ -71,7 +71,7 @@ func NewSonyflake(st Settings) *Sonyflake {
 
 	var err error
 	if st.MachineID == nil {
-		sf.machineID, err = lower16BitPrivateIP()
+		sf.machineID, err = Lower16BitPrivateIP()
 	} else {
 		sf.machineID, err = st.MachineID()
 	}
@@ -156,7 +156,7 @@ func isPrivateIPv4(ip net.IP) bool {
 		(ip[0] == 10 || ip[0] == 172 && (ip[1] >= 16 && ip[1] < 32) || ip[0] == 192 && ip[1] == 168)
 }
 
-func lower16BitPrivateIP() (uint16, error) {
+func Lower16BitPrivateIP() (uint16, error) {
 	ip, err := privateIPv4()
 	if err != nil {
 		return 0, err

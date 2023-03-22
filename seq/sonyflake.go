@@ -1,6 +1,8 @@
 package seq
 
 import (
+	"math"
+	"math/rand"
 	"strconv"
 	"time"
 
@@ -24,17 +26,22 @@ func init() {
 	}
 	_startTime = _startTime.Truncate(time.Second)
 
-	setting := sonyflake.Settings{StartTime: _startTime}
-	if _machineId > 0 {
-		setting.MachineID = func() (uint16, error) {
-			return uint16(_machineId), nil
-		}
+	setting := sonyflake.Settings{
+		StartTime: _startTime,
+		MachineID: func() (uint16, error) {
+			id := uint16(_machineId)
+			if id > 0 {
+				return id, nil
+			}
+			id, _ = sonyflake.Lower16BitPrivateIP()
+			if id > 0 {
+				return id, nil
+			}
+			return uint16(rand.Intn(math.MaxUint16 + 1)), nil
+		},
 	}
 
 	_sf = sonyflake.NewSonyflake(setting)
-	if _sf == nil {
-		_sf = sonyflake.NewSonyflake(sonyflake.Settings{})
-	}
 	if _sf == nil {
 		ilog.X.Fatal().Msgf("sonyflake setting error")
 	}
