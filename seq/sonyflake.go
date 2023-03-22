@@ -33,6 +33,9 @@ func init() {
 
 	_sf = sonyflake.NewSonyflake(setting)
 	if _sf == nil {
+		_sf = sonyflake.NewSonyflake(sonyflake.Settings{})
+	}
+	if _sf == nil {
 		ilog.X.Fatal().Msgf("sonyflake setting error")
 	}
 
