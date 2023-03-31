@@ -75,7 +75,7 @@ func (bot *Dingtalk) SendRaw(raw any) error {
 		SetResult(&DingtalkResp{}).
 		Post(addr)
 	if err != nil {
-		return fmt.Errorf("bot: dingtalk: %s", err)
+		return fmt.Errorf("bot: dingtalk: %w", err)
 	}
 	if e, ok := resp.Result().(*DingtalkResp); ok && e.ErrCode != 0 {
 		return fmt.Errorf("bot: dingtalk: %d, %s", e.ErrCode, e.ErrMsg)

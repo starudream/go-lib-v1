@@ -58,7 +58,7 @@ func (bot *Telegram) SendRaw(raw any) error {
 		SetResult(&TelegramResp{}).
 		Post(addr)
 	if err != nil {
-		return fmt.Errorf("bot: telegram: %s", err)
+		return fmt.Errorf("bot: telegram: %w", err)
 	}
 	if e, ok := resp.Result().(*TelegramResp); ok && !e.Ok {
 		return fmt.Errorf("bot: telegram: %d, %s", e.ErrorCode, e.Description)
