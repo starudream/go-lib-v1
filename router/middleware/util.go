@@ -1,6 +1,7 @@
 package middleware
 
 import (
+	"regexp"
 	"unicode"
 
 	"github.com/starudream/go-lib/internal/gin"
@@ -24,4 +25,10 @@ func isASCII(s []byte) bool {
 		}
 	}
 	return true
+}
+
+var jsonCheck = regexp.MustCompile(`(?i:(application|text)/(json|.*\+json|json-.*)(;|$))`)
+
+func isJSONType(ct string) bool {
+	return jsonCheck.MatchString(ct)
 }

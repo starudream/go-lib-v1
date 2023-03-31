@@ -13,6 +13,7 @@ import (
 var (
 	rawDataEmpty  = []byte("<empty>")
 	rawDataIgnore = []byte("<ignore>")
+	rawDataBinary = []byte("<binary>")
 )
 
 func Logger(c *Context) {
@@ -45,12 +46,13 @@ func Logger(c *Context) {
 
 	resp, statusCode := c.Writer.Data(), c.Writer.Status()
 
-	if len(resp) == 0 {
+	if isJSONType(c.Writer.Header().Get("Content-Type")) {
+	} else if len(resp) == 0 {
 		resp = rawDataEmpty
-	} else if bytes.Count(resp, []byte("\n")) >= 10 {
+	} else if bytes.Count(resp, []byte("\n")) >= 50 {
 		resp = rawDataIgnore
 	} else if !isASCII(resp) {
-		resp = rawDataIgnore
+		resp = rawDataBinary
 	}
 
 	lvl := log.InfoLevel
