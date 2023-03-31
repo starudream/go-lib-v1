@@ -66,7 +66,12 @@ var (
 	GetString               = _v.GetString
 	GetBool                 = _v.GetBool
 	GetInt                  = _v.GetInt
+	GetInt32                = _v.GetInt32
+	GetInt64                = _v.GetInt64
 	GetUint                 = _v.GetUint
+	GetUint16               = _v.GetUint16
+	GetUint32               = _v.GetUint32
+	GetUint64               = _v.GetUint64
 	GetFloat64              = _v.GetFloat64
 	GetTime                 = _v.GetTime
 	GetDuration             = _v.GetDuration
