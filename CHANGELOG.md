@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.3](https://github.com/starudream/go-lib/compare/v1.12.2...v1.12.3) (2023-03-31)
+
+
+### Performance Improvements
+
+* **router:** perfect logger ([e655654](https://github.com/starudream/go-lib/commit/e6556547a8c6821ba2fcb5a4d8df7bc5049ddd61))
+
 ## [1.12.2](https://github.com/starudream/go-lib/compare/v1.12.1...v1.12.2) (2023-03-31)
 
 
