@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.2](https://github.com/starudream/go-lib/compare/v1.12.1...v1.12.2) (2023-03-31)
+
+
+### Performance Improvements
+
+* **config:** add helper ([e493582](https://github.com/starudream/go-lib/commit/e49358290cadbb5497ebd5611e3b947658630f6f))
+
 ## [1.12.1](https://github.com/starudream/go-lib/compare/v1.12.0...v1.12.1) (2023-03-31)
 
 
