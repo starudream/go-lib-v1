@@ -1,5 +1,19 @@
 # Changelog
 
+## [1.12.1](https://github.com/starudream/go-lib/compare/v1.12.0...v1.12.1) (2023-03-31)
+
+
+### Bug Fixes
+
+* **seq:** fix sonyflake machine id ([6550118](https://github.com/starudream/go-lib/commit/6550118c25c18539ccdf0468419a73aeb1c01084))
+
+
+### Performance Improvements
+
+* perfect error ([3fd7e4f](https://github.com/starudream/go-lib/commit/3fd7e4fe436f0c290744a19a60ee05057a003439))
+* **router:** add gzip ([0896ff9](https://github.com/starudream/go-lib/commit/0896ff9607331ec60467a652dc8993b58fa07e93))
+* **router:** enable gzip ([65d3f72](https://github.com/starudream/go-lib/commit/65d3f723a09c80c91dfad97a4c99ff060475205f))
+
 ## [1.12.0](https://github.com/starudream/go-lib/compare/v1.11.1...v1.12.0) (2023-03-22)
 
 
