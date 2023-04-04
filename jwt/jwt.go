@@ -44,7 +44,6 @@ func init() {
 	case jwt.SigningMethodHS256, jwt.SigningMethodHS512:
 		if secret == "" {
 			secret = _secret
-			ilog.X.Warn().Msgf("jwt secret is empty, use default secret")
 		}
 		secretKey = []byte(secret)
 	case jwt.SigningMethodRS256, jwt.SigningMethodRS512:
