@@ -1,4 +1,4 @@
-// Copyright 2013-2022 The Cobra Authors
+// Copyright 2013-2023 The Cobra Authors
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
@@ -43,6 +43,30 @@ func (c *Command) GenZshCompletionNoDesc(w io.Writer) error {
 	return c.genZshCompletion(w, false)
 }
 
+// MarkZshCompPositionalArgumentFile only worked for zsh and its behavior was
+// not consistent with Bash completion. It has therefore been disabled.
+// Instead, when no other completion is specified, file completion is done by
+// default for every argument. One can disable file completion on a per-argument
+// basis by using ValidArgsFunction and ShellCompDirectiveNoFileComp.
+// To achieve file extension filtering, one can use ValidArgsFunction and
+// ShellCompDirectiveFilterFileExt.
+//
+// Deprecated
+func (c *Command) MarkZshCompPositionalArgumentFile(argPosition int, patterns ...string) error {
+	return nil
+}
+
+// MarkZshCompPositionalArgumentWords only worked for zsh. It has therefore
+// been disabled.
+// To achieve the same behavior across all shells, one can use
+// ValidArgs (for the first argument only) or ValidArgsFunction for
+// any argument (can include the first one also).
+//
+// Deprecated
+func (c *Command) MarkZshCompPositionalArgumentWords(argPosition int, words ...string) error {
+	return nil
+}
+
 func (c *Command) genZshCompletionFile(filename string, includeDesc bool) error {
 	outFile, err := os.Create(filename)
 	if err != nil {
@@ -66,6 +90,7 @@ func genZshComp(buf io.StringWriter, name string, includeDesc bool) {
 		compCmd = ShellCompNoDescRequestCmd
 	}
 	WriteStringAndCheck(buf, fmt.Sprintf(`#compdef %[1]s
+compdef _%[1]s %[1]s
 
 # zsh completion for %-36[1]s -*- shell-script -*-
 
@@ -84,8 +109,9 @@ _%[1]s()
     local shellCompDirectiveNoFileComp=%[5]d
     local shellCompDirectiveFilterFileExt=%[6]d
     local shellCompDirectiveFilterDirs=%[7]d
+    local shellCompDirectiveKeepOrder=%[8]d
 
-    local lastParam lastChar flagPrefix requestComp out directive comp lastComp noSpace
+    local lastParam lastChar flagPrefix requestComp out directive comp lastComp noSpace keepOrder
     local -a completions
 
     __%[1]s_debug "\n========= starting completion logic =========="
@@ -153,7 +179,7 @@ _%[1]s()
         return
     fi
 
-    local activeHelpMarker="%[8]s"
+    local activeHelpMarker="%[9]s"
     local endIndex=${#activeHelpMarker}
     local startIndex=$((${#activeHelpMarker}+1))
     local hasActiveHelp=0
@@ -203,6 +229,11 @@ _%[1]s()
         noSpace="-S ''"
     fi
 
+    if [ $((directive & shellCompDirectiveKeepOrder)) -ne 0 ]; then
+        __%[1]s_debug "Activating keep order."
+        keepOrder="-V"
+    fi
+
     if [ $((directive & shellCompDirectiveFilterFileExt)) -ne 0 ]; then
         # File extension filtering
         local filteringCmd
@@ -238,7 +269,7 @@ _%[1]s()
         return $result
     else
         __%[1]s_debug "Calling _describe"
-        if eval _describe "completions" completions $flagPrefix $noSpace; then
+        if eval _describe $keepOrder "completions" completions $flagPrefix $noSpace; then
             __%[1]s_debug "_describe found some completions"
 
             # Return the success of having called _describe
@@ -272,6 +303,6 @@ if [ "$funcstack[1]" = "_%[1]s" ]; then
 fi
 `, name, compCmd,
 		ShellCompDirectiveError, ShellCompDirectiveNoSpace, ShellCompDirectiveNoFileComp,
-		ShellCompDirectiveFilterFileExt, ShellCompDirectiveFilterDirs,
+		ShellCompDirectiveFilterFileExt, ShellCompDirectiveFilterDirs, ShellCompDirectiveKeepOrder,
 		activeHelpMarker))
 }
