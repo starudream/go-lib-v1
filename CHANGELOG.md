@@ -1,5 +1,17 @@
 # Changelog
 
+## [1.12.5](https://github.com/starudream/go-lib/compare/v1.12.4...v1.12.5) (2023-04-24)
+
+
+### Performance Improvements
+
+* **internal:** cobra ([96d212a](https://github.com/starudream/go-lib/commit/96d212a9df7559e6e0b041ec6bbcf3dfd618500e))
+
+
+### release
+
+* 1.12.5 ([48c3d10](https://github.com/starudream/go-lib/commit/48c3d1000205f41b7529fd8602af01f419555eb2))
+
 ## [1.12.4](https://github.com/starudream/go-lib/compare/v1.12.3...v1.12.4) (2023-04-04)
 
 
