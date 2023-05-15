@@ -21,7 +21,7 @@ require (
 	github.com/robfig/cron/v3 v3.0.1
 	github.com/rs/zerolog v1.29.1
 	github.com/spf13/afero v1.9.5
-	github.com/spf13/cast v1.5.0
+	github.com/spf13/cast v1.5.1
 	github.com/spf13/pflag v1.0.5
 	github.com/stretchr/testify v1.8.2
 	golang.org/x/net v0.9.0
