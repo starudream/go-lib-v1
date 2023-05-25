@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.12.6](https://github.com/starudream/go-lib/compare/v1.12.5...v1.12.6) (2023-05-25)
+
+
+### release
+
+* 1.12.6 ([ed9cbf7](https://github.com/starudream/go-lib/commit/ed9cbf7108ad2062cca43816a5dfc37abeb143a5))
+
 ## [1.12.5](https://github.com/starudream/go-lib/compare/v1.12.4...v1.12.5) (2023-04-24)
 
 
