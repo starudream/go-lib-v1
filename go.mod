@@ -4,12 +4,12 @@ go 1.18
 
 require (
 	github.com/bluele/gcache v0.0.2
-	github.com/brianvoe/gofakeit/v6 v6.21.0
+	github.com/brianvoe/gofakeit/v6 v6.22.0
 	github.com/davecgh/go-spew v1.1.1
 	github.com/fsnotify/fsnotify v1.6.0
 	github.com/go-playground/locales v0.14.1
 	github.com/go-playground/universal-translator v0.18.1
-	github.com/go-playground/validator/v10 v10.14.0
+	github.com/go-playground/validator/v10 v10.14.1
 	github.com/go-resty/resty/v2 v2.7.0
 	github.com/golang-jwt/jwt/v4 v4.5.0
 	github.com/google/uuid v1.3.0
@@ -23,7 +23,7 @@ require (
 	github.com/spf13/afero v1.9.5
 	github.com/spf13/cast v1.5.1
 	github.com/spf13/pflag v1.0.5
-	github.com/stretchr/testify v1.8.3
+	github.com/stretchr/testify v1.8.4
 	golang.org/x/net v0.10.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
 	gopkg.in/yaml.v3 v3.0.1
