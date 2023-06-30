@@ -1,6 +1,6 @@
 module github.com/starudream/go-lib
 
-go 1.18
+go 1.20
 
 require (
 	github.com/bluele/gcache v0.0.2

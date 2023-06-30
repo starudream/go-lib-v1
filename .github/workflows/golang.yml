@@ -24,8 +24,6 @@ jobs:
           - 'windows-latest'
           - 'macos-latest'
         go:
-          - '1.18'
-          - '1.19'
           - '1.20'
     steps:
       - name: Checkout
