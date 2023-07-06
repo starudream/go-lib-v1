@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.0](https://github.com/starudream/go-lib/compare/v1.12.6...v1.13.0) (2023-07-06)
+
+
+### Features
+
+* use go1.20 ([6db0ac0](https://github.com/starudream/go-lib/commit/6db0ac0253ad7956ac237a78b32bd39e066c22c0))
+
 ## [1.12.6](https://github.com/starudream/go-lib/compare/v1.12.5...v1.12.6) (2023-05-25)
 
 
