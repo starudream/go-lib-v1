@@ -2,6 +2,8 @@ package middleware
 
 import (
 	"bytes"
+	"compress/gzip"
+	"io"
 	"net/http"
 	"time"
 
@@ -46,6 +48,14 @@ func Logger(c *Context) {
 
 	resp, statusCode := c.Writer.Data(), c.Writer.Status()
 
+	switch c.Writer.Header().Get("Content-Encoding") {
+	case "":
+	case "gzip":
+		resp = gunzip(resp)
+	default:
+		resp = rawDataBinary
+	}
+
 	if isJSONType(c.Writer.Header().Get("Content-Type")) {
 	} else if len(resp) == 0 {
 		resp = rawDataEmpty
@@ -65,4 +75,17 @@ func Logger(c *Context) {
 		Str("type", filterFlags(c.Writer.Header().Get("Content-Type"))).
 		Dur("took", time.Since(start)).
 		Msgf("resp=%s", resp)
+}
+
+func gunzip(bs []byte) []byte {
+	r, err := gzip.NewReader(bytes.NewBuffer(bs))
+	if err != nil {
+		return rawDataBinary
+	}
+	defer r.Close()
+	v, err := io.ReadAll(r)
+	if err != nil {
+		return rawDataBinary
+	}
+	return v
 }

@@ -41,9 +41,9 @@ func init() {
 	_e.Use(
 		middleware.RealIP,
 		middleware.RequestId,
-		middleware.GZIP,
 		middleware.CORS,
 		middleware.Logger,
+		middleware.GZIP,
 		middleware.Recover,
 	)
 
