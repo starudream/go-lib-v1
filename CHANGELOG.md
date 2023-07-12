@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.1](https://github.com/starudream/go-lib/compare/v1.13.0...v1.13.1) (2023-07-12)
+
+
+### Bug Fixes
+
+* **router:** fix gzip logger ([8fcb7ad](https://github.com/starudream/go-lib/commit/8fcb7adcda51e2c405210df736911e3cf6418b4c))
+
 ## [1.13.0](https://github.com/starudream/go-lib/compare/v1.12.6...v1.13.0) (2023-07-06)
 
 
