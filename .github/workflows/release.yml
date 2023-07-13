@@ -5,6 +5,10 @@ on:
     branches:
       - master
 
+permissions:
+  contents: write
+  pull-requests: write
+
 jobs:
   release:
     name: Release
@@ -14,7 +18,6 @@ jobs:
         uses: google-github-actions/release-please-action@v3
         id: prepare
         with:
-          token: ${{ secrets.PAT }}
           release-type: go
           bump-minor-pre-major: true
           bump-patch-for-minor-pre-major: true
@@ -23,6 +26,5 @@ jobs:
         if: ${{ steps.prepare.outputs.release_created }}
         uses: softprops/action-gh-release@v1
         with:
-          token: ${{ secrets.PAT }}
           tag_name: ${{ steps.prepare.outputs.tag_name }}
           generate_release_notes: true
