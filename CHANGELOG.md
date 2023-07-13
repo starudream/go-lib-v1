@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.2](https://github.com/starudream/go-lib/compare/v1.13.1...v1.13.2) (2023-07-13)
+
+
+### Performance Improvements
+
+* **config:** perfect config path ([ecaee21](https://github.com/starudream/go-lib/commit/ecaee219d67dc3be13cad145c1e6639738223e58))
+
 ## [1.13.1](https://github.com/starudream/go-lib/compare/v1.13.0...v1.13.1) (2023-07-12)
 
 
