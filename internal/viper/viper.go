@@ -1337,7 +1337,7 @@ func (v *Viper) Set(key string, value interface{}) {
 func ReadInConfig() error { return v.ReadInConfig() }
 
 func (v *Viper) ReadInConfig() error {
-	v.logger.Info("attempting to read in config file")
+	// v.logger.Info("attempting to read in config file")
 	filename, err := v.getConfigFile()
 	if err != nil {
 		return err

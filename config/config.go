@@ -3,6 +3,7 @@ package config
 import (
 	"os"
 	"path/filepath"
+	"sort"
 	"strings"
 
 	"github.com/starudream/go-lib/codec/json"
@@ -14,42 +15,54 @@ import (
 
 var _v = func() *viper.Viper {
 	v := viper.NewWithOptions(viper.WithLogger(&logger{}))
-	v.SetConfigName("config")
 	v.SetEnvPrefix(strings.ToUpper(constant.PREFIX))
 	v.SetEnvKeyReplacer(strings.NewReplacer("-", "_", ".", "_"))
 	v.AutomaticEnv()
 
+	var err error
+
 	cp := v.GetString("config.path")
 	if cp != "" {
-		v.SetConfigFile(cp)
-		err := v.ReadInConfig()
+		err = vReadFromFile(v, cp)
 		if err != nil {
 			ilog.X.Fatal().Msgf("read config file error file=%s\n%s", v.ConfigFileUsed(), err.Error())
-		} else {
-			ilog.X.Info().Msgf("read config file success file=%s", v.ConfigFileUsed())
 		}
 	} else {
-		if dir, err := os.Getwd(); err == nil {
-			v.AddConfigPath(dir)
-		}
-		if file, err := os.Executable(); err == nil {
-			v.AddConfigPath(filepath.Dir(file))
-		}
-		if dir, err := os.UserHomeDir(); err == nil {
-			v.AddConfigPath(dir)
-		}
-		if dir, err := os.UserConfigDir(); err == nil && constant.NAME != "" {
-			v.AddConfigPath(filepath.Join(dir, constant.NAME))
-		}
-		err := v.ReadInConfig()
-		if err == nil {
-			ilog.X.Info().Msgf("read config file success file=%s", v.ConfigFileUsed())
+		names := func() (ns []string) {
+			nm := map[string]struct{}{}
+			if file, _ := os.Executable(); file != "" {
+				nm[filepath.Join(filepath.Dir(file), "config")] = struct{}{}
+				nm[strings.TrimSuffix(file, filepath.Ext(file))] = struct{}{}
+			}
+			if constant.NAME != "" {
+				if dir, _ := os.UserHomeDir(); dir != "" {
+					nm[filepath.Join(dir, ".config", constant.NAME)] = struct{}{}
+				}
+				if dir, _ := os.UserConfigDir(); dir != "" {
+					nm[filepath.Join(dir, constant.NAME)] = struct{}{}
+				}
+			}
+			for n := range nm {
+				ns = append(ns, n)
+			}
+			sort.Strings(ns)
+			return
+		}()
+		for i := 0; i < len(names); i++ {
+			err = vReadFromFile(v, names[i])
+			if err == nil {
+				break
+			}
 		}
 	}
 
-	ss := v.AllSettings()
-	if len(ss) != 0 {
-		ilog.X.Debug().Msgf("settings: %s", json.MustMarshalString(ss))
+	if err == nil {
+		ilog.X.Info().Msgf("read config file success file=%s", v.ConfigFileUsed())
+
+		ss := v.AllSettings()
+		if len(ss) != 0 {
+			ilog.X.Debug().Msgf("settings: %s", json.MustMarshalString(ss))
+		}
 	}
 
 	return v
@@ -93,5 +106,16 @@ var (
 
 func UnmarshalKeyTo[T any](key string) (t T, err error) {
 	err = _v.UnmarshalKey(key, &t)
+	return
+}
+
+func vReadFromFile(v *viper.Viper, name string) (err error) {
+	for i := 0; i < len(viper.SupportedExts); i++ {
+		v.SetConfigFile(name + "." + viper.SupportedExts[i])
+		err = v.ReadInConfig()
+		if err == nil {
+			return
+		}
+	}
 	return
 }
