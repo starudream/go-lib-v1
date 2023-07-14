@@ -68,7 +68,6 @@ var _v = func() *viper.Viper {
 			sort.Strings(ns)
 			return
 		}()
-		ilog.X.Info().Msgf("search config file in %s", json.MustMarshalIndent(ns))
 		for i := 0; i < len(ns); i++ {
 			err = vReadFromFile(v, ns[i])
 			if err == nil {
