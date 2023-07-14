@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.13.4](https://github.com/starudream/go-lib/compare/v1.13.3...v1.13.4) (2023-07-14)
+
+
+### Bug Fixes
+
+* **config:** add debug log ([ff8a177](https://github.com/starudream/go-lib/commit/ff8a1773dd412cee58ed2d7d8b07b174a2d33dc0))
+* **config:** remove log ([8756c2c](https://github.com/starudream/go-lib/commit/8756c2cfb8cfb4f6121ebf877ba875fdce8e896f))
+
 ## [1.13.3](https://github.com/starudream/go-lib/compare/v1.13.2...v1.13.3) (2023-07-14)
 
 
