@@ -23,7 +23,8 @@ var _v = func() *viper.Viper {
 
 	cp := v.GetString("config.path")
 	if cp != "" {
-		err = vReadFromFile(v, cp)
+		v.SetConfigFile(cp)
+		err = v.ReadInConfig()
 		if err != nil {
 			ilog.X.Fatal().Msgf("read config file error file=%s\n%s", v.ConfigFileUsed(), err.Error())
 		}
