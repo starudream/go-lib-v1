@@ -28,18 +28,38 @@ var _v = func() *viper.Viper {
 			ilog.X.Fatal().Msgf("read config file error file=%s\n%s", v.ConfigFileUsed(), err.Error())
 		}
 	} else {
-		names := func() (ns []string) {
-			nm := map[string]struct{}{}
-			if file, _ := os.Executable(); file != "" {
-				nm[filepath.Join(filepath.Dir(file), "config")] = struct{}{}
-				nm[strings.TrimSuffix(file, filepath.Ext(file))] = struct{}{}
-			}
-			if constant.NAME != "" {
-				if dir, _ := os.UserHomeDir(); dir != "" {
-					nm[filepath.Join(dir, ".config", constant.NAME)] = struct{}{}
+		ns := func() (ns []string) {
+			wd, _ := os.Getwd()
+			hd, _ := os.UserHomeDir()
+			ep, en := func() (ep, en string) {
+				e, _ := os.Executable()
+				if e != "" {
+					ep = filepath.Dir(e)
+					en = strings.TrimSuffix(filepath.Base(e), filepath.Ext(e))
 				}
-				if dir, _ := os.UserConfigDir(); dir != "" {
-					nm[filepath.Join(dir, constant.NAME)] = struct{}{}
+				return
+			}()
+			nm := map[string]struct{}{}
+			if wd != "" {
+				nm[filepath.Join(wd, "config")] = struct{}{}
+				if en != "" {
+					nm[filepath.Join(wd, en)] = struct{}{}
+				}
+			}
+			if ep != "" {
+				nm[filepath.Join(ep, "config")] = struct{}{}
+				if en != "" {
+					nm[filepath.Join(ep, en)] = struct{}{}
+				}
+			}
+			if hd != "" {
+				if en != "" {
+					nm[filepath.Join(hd, ".config", en)] = struct{}{}
+					nm[filepath.Join(hd, ".config", en, "config")] = struct{}{}
+				}
+				if constant.NAME != "" {
+					nm[filepath.Join(hd, ".config", constant.NAME)] = struct{}{}
+					nm[filepath.Join(hd, ".config", constant.NAME, "config")] = struct{}{}
 				}
 			}
 			for n := range nm {
@@ -48,8 +68,9 @@ var _v = func() *viper.Viper {
 			sort.Strings(ns)
 			return
 		}()
-		for i := 0; i < len(names); i++ {
-			err = vReadFromFile(v, names[i])
+		ilog.X.Info().Msgf("search config file in %s", json.MustMarshalIndent(ns))
+		for i := 0; i < len(ns); i++ {
+			err = vReadFromFile(v, ns[i])
 			if err == nil {
 				break
 			}
