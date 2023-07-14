@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.5](https://github.com/starudream/go-lib/compare/v1.13.4...v1.13.5) (2023-07-14)
+
+
+### Bug Fixes
+
+* **config:** fix config path from env ([05a9473](https://github.com/starudream/go-lib/commit/05a9473a9ac2a8d976d6583405995213935eb57d))
+
 ## [1.13.4](https://github.com/starudream/go-lib/compare/v1.13.3...v1.13.4) (2023-07-14)
 
 
