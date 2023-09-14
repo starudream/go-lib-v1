@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.13.7](https://github.com/starudream/go-lib/compare/v1.13.6...v1.13.7) (2023-09-14)
+
+
+### Performance Improvements
+
+* mod ([179f7c6](https://github.com/starudream/go-lib/commit/179f7c6cf3c2d17c250bd463afecf5a693481acd))
+
 ## [1.13.6](https://github.com/starudream/go-lib/compare/v1.13.5...v1.13.6) (2023-08-18)
 
 
