@@ -14,7 +14,6 @@ on:
 
 jobs:
   build:
-    name: Build
     runs-on: ${{ matrix.os }}
     strategy:
       fail-fast: false
@@ -24,13 +23,10 @@ jobs:
           - 'windows-latest'
           - 'macos-latest'
         go:
-          - '1.20'
+          - '1.21'
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
-      - name: Go
-        uses: actions/setup-go@v4
+      - uses: actions/checkout@v4
+      - uses: actions/setup-go@v4
         with:
           go-version: ${{ matrix.go }}
-      - name: Build
-        run: make bin
+      - run: make bin
